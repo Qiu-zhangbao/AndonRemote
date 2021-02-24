@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "adv_pack.h": "c",
+        "mesh_vendor.h": "c",
+        "andon_app.h": "c",
+        "mesh_btn_handler.h": "c",
+        "app_config.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled",
+}

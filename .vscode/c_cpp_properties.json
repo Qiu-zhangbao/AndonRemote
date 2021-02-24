@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:\\Cypress\\6.4.0.1023\\SDK\\WICED-Studio-6.4-1113\\20735-B1_Bluetooth\\**",
+                "D:\\Cypress\\6.4.0.1023\\SDK\\WICED-Studio-6.4-1113\\common\\include\\**",
+                "D:\\Cypress\\6.4.0.1023\\SDK\\WICED-Studio-6.4-1113\\43xxx_Wi-Fi\\tools\\ARM_GNU\\Win32\\arm-none-eabi\\include\\**",
+                "D:\\Cypress\\6.4.0.1023\\SDK\\WICED-Studio-6.4-1113\\43xxx_Wi-Fi\\tools\\ARM_GNU\\Win32\\lib\\gcc\\arm-none-eabi\\7.2.1\\include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
