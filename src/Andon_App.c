@@ -1,20 +1,20 @@
 //******************************************************************************
 //*
-//* ÎÄ ¼ş Ãû : Andon_App.c
+//* æ–‡ ä»¶ å : Andon_App.c
 //*   MCU    : CYW920735/WICED       
-//* ÎÄ¼şÃèÊö : À¶ÑÀmesh switchÓ¦ÓÃÂß¼­´¦Àí       
-//* ×÷    Õß : ÕÅÍş/Andon Health CO.Ltd
-//* °æ    ±¾ : V0.0
-//* ÈÕ    ÆÚ : 
+//* æ–‡ä»¶æè¿° : è“ç‰™mesh switchåº”ç”¨é€»è¾‘å¤„ç†       
+//* ä½œ    è€… : å¼ å¨/Andon Health CO.Ltd
+//* ç‰ˆ    æœ¬ : V0.0
+//* æ—¥    æœŸ : 
 //*
-//* ¸üĞÂÀúÊ· : 
-//*     ÈÕÆÚ       ×÷Õß    °æ±¾     ÃèÊö
+//* æ›´æ–°å†å² : 
+//*     æ—¥æœŸ       ä½œè€…    ç‰ˆæœ¬     æè¿°
 //*         
 //*                   
 //******************************************************************************
 
 ///*****************************************************************************
-///*                         °üº¬ÎÄ¼şËµÃ÷
+///*                         åŒ…å«æ–‡ä»¶è¯´æ˜
 ///*****************************************************************************
 #include "wiced_bt_trace.h"
 #include "wiced_memory.h"
@@ -48,39 +48,39 @@
 #define WICED_LOG_LEVEL   WICDE_DEBUG_LEVEL
 
 ///*****************************************************************************
-///*                         ºê¶¨ÒåÇø
+///*                         å®å®šä¹‰åŒº
 ///*****************************************************************************
 #define MESH_REMOTE_CLIENT_ELEMENT_INDEX  0
-#define ANDON_APP_UNPROVISON              0    //Î´ÈëÍø
-#define ANDON_APP_APP_PROVISON            1    //APPÈëÍø
-#define ANDON_APP_SELF_PROVISON           2    //Ò£¿ØÆ÷ÈëÍø
+#define ANDON_APP_UNPROVISON              0    //æœªå…¥ç½‘
+#define ANDON_APP_APP_PROVISON            1    //APPå…¥ç½‘
+#define ANDON_APP_SELF_PROVISON           2    //é¥æ§å™¨å…¥ç½‘
 
 #define USE_EXTRA_API                    // Use extra mesh_core APIs to access some parameters
 
-#define ANDONAPP_DELTACMD_INTERVAL        400    //µ¥Î»Îªms
+#define ANDONAPP_DELTACMD_INTERVAL        400    //å•ä½ä¸ºms
 
 #if CHECK_BATTERY_VALUE
 #define CHANNEL_TO_MEASURE_DC_VOLT        ADC_INPUT_P29
 #endif
 ///*****************************************************************************
-///*                         Strcut½á¹¹±äÁ¿¶¨ÒåÇø
+///*                         Strcutç»“æ„å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 typedef struct 
 {
-    uint16_t send_delta_timecnt;              //ÓÃÓÚ·¢ËÍdeltaÖ¸Áî¼ÆÊ±
-    uint16_t send_onoff_timecnt;              //ÓÃÓÚ·¢ËÍonoffÖ¸Áî¼ÆÊ±  Îª0Ê±±íÊ¾Î´Æô¶¯·¢ËÍ¼ÆÊ±
-    uint16_t btn_fastpress_numcnt;            //ÓÃÓÚ¼ÇÂ¼¿ìËÙ°´ONOFF°´¼üµÄ´ÎÊı
-    uint16_t btn_onoff_lasttime;              //ÓÃÓÚ¼ÇÂ¼×îĞÂÒ»´ËONOFF°´¼üµÄÊ±¼ä
-    uint16_t btn_encoder_numcnt;              //ÓÃÓÚ¼ÇÂ¼±àÂëÆ÷¶¯×÷µÄ¿ªÊ¼Ê±¼ä
-    UINT64   btn_encoder_start_time;          //ÓÃÓÚ¼ÇÂ¼±àÂëÆ÷¶¯×÷µÄ¿ªÊ¼Ê±¼ä
-    UINT64   btn_encoder_end_time;            //ÓÃÓÚ¼ÇÂ¼±àÂëÆ÷¶¯×÷µÄ½áÊøÊ±¼ä
-    wiced_bool_t btn_onoff_cmdstata;          //ÓÃÓÚ¼ÇÂ¼×îĞÂÒ»´ÎONOFFÖ¸ÁîµÄ×´Ì¬--ON or OFF
+    uint16_t send_delta_timecnt;              //ç”¨äºå‘é€deltaæŒ‡ä»¤è®¡æ—¶
+    uint16_t send_onoff_timecnt;              //ç”¨äºå‘é€onoffæŒ‡ä»¤è®¡æ—¶  ä¸º0æ—¶è¡¨ç¤ºæœªå¯åŠ¨å‘é€è®¡æ—¶
+    uint16_t btn_fastpress_numcnt;            //ç”¨äºè®°å½•å¿«é€ŸæŒ‰ONOFFæŒ‰é”®çš„æ¬¡æ•°
+    uint16_t btn_onoff_lasttime;              //ç”¨äºè®°å½•æœ€æ–°ä¸€æ­¤ONOFFæŒ‰é”®çš„æ—¶é—´
+    uint16_t btn_encoder_numcnt;              //ç”¨äºè®°å½•ç¼–ç å™¨åŠ¨ä½œçš„å¼€å§‹æ—¶é—´
+    UINT64   btn_encoder_start_time;          //ç”¨äºè®°å½•ç¼–ç å™¨åŠ¨ä½œçš„å¼€å§‹æ—¶é—´
+    UINT64   btn_encoder_end_time;            //ç”¨äºè®°å½•ç¼–ç å™¨åŠ¨ä½œçš„ç»“æŸæ—¶é—´
+    wiced_bool_t btn_onoff_cmdstata;          //ç”¨äºè®°å½•æœ€æ–°ä¸€æ¬¡ONOFFæŒ‡ä»¤çš„çŠ¶æ€--ON or OFF
 }andon_app_static_handle_t;
 
 
 
 ///*****************************************************************************
-///*                         º¯ÊıÉùÃ÷Çø
+///*                         å‡½æ•°å£°æ˜åŒº
 ///*****************************************************************************
 static void Andon_App_Provision_Stata_Change(uint16_t event, void *p_data);
 static void Andon_App_Periodic_Timer_Callback(uint32_t arg);
@@ -93,29 +93,29 @@ extern void mesh_interrupt_handler(void* user_data, uint8_t pin);
 extern void low_power_set_allow_sleep_flag(uint8_t allow_sleep);
 
 ///*****************************************************************************
-///*                         ³£Á¿¶¨ÒåÇø
+///*                         å¸¸é‡å®šä¹‰åŒº
 ///*****************************************************************************
 
 ///*****************************************************************************
-///*                         ÒıÓÃÍâ²¿È«¾Ö±äÁ¿ÉùÃ÷Çø
+///*                         å¼•ç”¨å¤–éƒ¨å…¨å±€å˜é‡å£°æ˜åŒº
 ///*****************************************************************************
 extern wiced_bt_mesh_provision_server_callback_t *mesh_app_provision_handler;
 extern wiced_bt_cfg_settings_t wiced_bt_cfg_settings;
 
 ///*****************************************************************************
-///*                         Íâ²¿È«¾Ö±äÁ¿¶¨ÒåÇø
+///*                         å¤–éƒ¨å…¨å±€å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 andon_app_handler_t andon_app_state;
 
 extern UINT32 keyscan_stuck_key_in_second;
 ///*****************************************************************************
-///*                         ÎÄ¼şÄÚ²¿È«¾Ö±äÁ¿¶¨ÒåÇø
+///*                         æ–‡ä»¶å†…éƒ¨å…¨å±€å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 static uint16_t AndonApp_pair_stata = ANDONPAIR_PAIR_IDLE;
 static uint16_t AndonApp_power_stata;
 static uint32_t AndonApp_runtime = 0;
 static uint8_t  fastturn = 0;
-static uint8_t  fastturnflag = 0;  //1 ±íÊ¾Ë³Ê±Õë 2±íÊ¾ÄæÊ±Õë 0±íÊ¾Î´Ê¶±ğ
+static uint8_t  fastturnflag = 0;  //1 è¡¨ç¤ºé¡ºæ—¶é’ˆ 2è¡¨ç¤ºé€†æ—¶é’ˆ 0è¡¨ç¤ºæœªè¯†åˆ«
 // static uint16_t AndonApp_proed_waitting = 0;
 // static uint16_t AndonApp_proed_selectdev = 0;
 static wiced_bool_t AndonApppaired = WICED_FALSE;
@@ -140,14 +140,14 @@ extern uint8_t mesh_fW_ver[WICED_BT_MESH_PROPERTY_LEN_DEVICE_FIRMWARE_REVISION];
 extern uint8_t mesh_hW_ver[WICED_BT_MESH_PROPERTY_LEN_DEVICE_HARDWARE_REVISION]; 
 
 ///*****************************************************************************
-///*                         º¯ÊıÊµÏÖÇø
+///*                         å‡½æ•°å®ç°åŒº
 ///*****************************************************************************
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: mesh_remote_lpn_friendship
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: mesh_remote_lpn_friendship
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 #if LOW_POWER_NODE == MESH_LOW_POWER_NODE_LPN
 static void mesh_remote_lpn_friendship(wiced_bool_t established, uint16_t frined_node_id)
@@ -156,10 +156,10 @@ static void mesh_remote_lpn_friendship(wiced_bool_t established, uint16_t frined
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: mesh_remote_frnd_friendship
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: mesh_remote_frnd_friendship
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 #elif LOW_POWER_NODE == MESH_LOW_POWER_NODE_FRIEND
 static void mesh_remote_frnd_friendship(wiced_bool_t established, uint16_t lpn_node_id)
@@ -225,10 +225,10 @@ static wiced_bool_t mesh_provisioner_fw_update_server_callback(uint16_t event, u
 #endif
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: andon_app_provision_stata_change
-// º¯ÊıÃèÊö: provision×´Ì¬¸Ä±äµÄ»Øµ÷
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: andon_app_provision_stata_change
+// å‡½æ•°æè¿°: provisionçŠ¶æ€æ”¹å˜çš„å›è°ƒ
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 static void Andon_App_Provision_Stata_Change(uint16_t event, void *p_data)
 {
@@ -251,10 +251,10 @@ static void Andon_App_Provision_Stata_Change(uint16_t event, void *p_data)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void Andon_App_AdvPairDone(uint8_t result)
 {
@@ -278,10 +278,10 @@ void Andon_App_AdvPairDone(uint8_t result)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void Andon_App_SleepSet(void)
 {
@@ -307,7 +307,7 @@ void Andon_App_SleepSet(void)
         WICED_LOG_VERBOSE("stop timer\n");
         LEDY_OFF;
         LEDB_OFF;
-        // ½ûÓÃÒ£¿ØÆ÷Åä¶Ô¹¦ÄÜ
+        // ç¦ç”¨é¥æ§å™¨é…å¯¹åŠŸèƒ½
         // example_key_init();
         mesh_start_stop_scan_callback(WICED_FALSE,WICED_FALSE);
         wiced_stop_timer(&andon_app_state.periodic_timer);
@@ -321,7 +321,7 @@ void appStartDevAdv(void)
     // uint8_t devdata[16] = {0,0xFF,0x70,0x08,0x03,0x07};
 
     // wiced_bt_dev_read_local_addr(devdata+6);
-    // // if(mesh_app_node_is_provisioned())  //¿ª¹ØÈëÍøºó²»ÔÙÆô¶¯×Ô¶¨Òå¹ã²¥
+    // // if(mesh_app_node_is_provisioned())  //å¼€å…³å…¥ç½‘åä¸å†å¯åŠ¨è‡ªå®šä¹‰å¹¿æ’­
     // if(WICED_TRUE == storageBindkey.bindflag)
     // {
     //     devdata[12] = 0x01;
@@ -355,7 +355,7 @@ void appBleConnectNotify(wiced_bool_t isconneted)
             AndonPair_Stop();
             andon_app_state.run_mode = ANDON_APP_RUN_NORMAL;
             andon_app_state.display_mode = ANDON_APP_DISPLAY_NORMAL;
-            //½ûÓÃÒ£¿ØÆ÷Åä¶Ô¹¦ÄÜ
+            //ç¦ç”¨é¥æ§å™¨é…å¯¹åŠŸèƒ½
             AndonApp_pair_stata = ANDONPAIR_PAIR_IDLE;
             AndonPair_DeInit(WICED_TRUE);
             btn_state.btn_idle_count = 0;
@@ -453,10 +453,10 @@ void AndonAppSetDevInfo(void)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: Andon_App_Init
-// º¯ÊıÃèÊö: switchÓ¦ÓÃ²¿·ÖµÄ³õÊ¼»¯
-// º¯ÊıÊäÈë:  None
-// º¯Êı·µ»ØÖµ:  None
+// å‡½æ•°åç§°: Andon_App_Init
+// å‡½æ•°æè¿°: switchåº”ç”¨éƒ¨åˆ†çš„åˆå§‹åŒ–
+// å‡½æ•°è¾“å…¥:  None
+// å‡½æ•°è¿”å›å€¼:  None
 //*****************************************************************************/
 void Andon_App_Init(wiced_bool_t is_provison)
 {
@@ -497,14 +497,14 @@ void Andon_App_Init(wiced_bool_t is_provison)
         // wiced_bt_cfg_settings.device_name = dev_name;
     #endif
 
-    //³õÊ¼»¯°´¼ü¼°ÖÜÆÚ¶¨Ê±Æ÷
+    //åˆå§‹åŒ–æŒ‰é”®åŠå‘¨æœŸå®šæ—¶å™¨
     {
         WICED_LOG_DEBUG("Initial btn_state\r\n");
         mesh_btn_init();
         //example_key_init();
         WICED_LOG_DEBUG("Local name %s \n",wiced_bt_cfg_settings.device_name);
         mesh_lpn_SetCallback(Andon_App_SleepSet);
-        //ÓÃÓÚÇø·ÖÊÇ·ñÊÇÈëÍøºóµÄÖØĞÂ³õÊ¼»¯
+        //ç”¨äºåŒºåˆ†æ˜¯å¦æ˜¯å…¥ç½‘åçš„é‡æ–°åˆå§‹åŒ–
         if(wiced_is_timer_in_use(&andon_app_state.periodic_timer))  
         {
             wiced_deinit_timer(&andon_app_state.periodic_timer);
@@ -526,7 +526,7 @@ void Andon_App_Init(wiced_bool_t is_provison)
         LOG_DEBUG("is_provisioning = %d: result = %d, len = %d\n", provision_status, result, len);
         if (result == WICED_BT_SUCCESS && len == 1 && provision_status == MESH_APP_PROVISION_STATUS_PRORESTART)
         {
-            // ÓÉÓÚ³¬Ê±Î´Íê³ÉÈëÍø¶ø½øĞĞ»Ö¸´³ö³§ÉèÖÃ£¬¼ÌĞøµÈ´ıÈëÍø
+            // ç”±äºè¶…æ—¶æœªå®Œæˆå…¥ç½‘è€Œè¿›è¡Œæ¢å¤å‡ºå‚è®¾ç½®ï¼Œç»§ç»­ç­‰å¾…å…¥ç½‘
             mesh_nvram_access(WICED_TRUE, NVRAM_ID_LOCAL_PROVISION, NULL, 0, &result);
             andon_app_state.run_mode = ANDON_APP_RUN_WAIT_PROVISION;
             appconnadvenable = WICED_TRUE;
@@ -556,7 +556,7 @@ void Andon_App_Init(wiced_bool_t is_provison)
         //LEDY_ON;
     }
     
-    //É¨Ãè»Ø¸´°üÖĞÌí¼ÓÉè±¸Ãû³Æ
+    //æ‰«æå›å¤åŒ…ä¸­æ·»åŠ è®¾å¤‡åç§°
     {
         wiced_bt_ble_advert_elem_t  adv_elem[3];
         uint8_t                     buf[2];
@@ -575,7 +575,7 @@ void Andon_App_Init(wiced_bool_t is_provison)
         wiced_bt_mesh_set_raw_scan_response_data(num_elem, adv_elem);
     }
     
-    //³õÊ¼»¯²úÆ·Ä£ĞÍ
+    //åˆå§‹åŒ–äº§å“æ¨¡å‹
     {
         #if USE_REMOTE_PROVISION 
             wiced_bt_mesh_remote_provisioning_server_init();
@@ -629,7 +629,7 @@ void Andon_App_Init(wiced_bool_t is_provison)
     }
     // wiced_bt_mesh_core_adv_tx_power = 3;
     // wiced_bt_dev_set_adv_tx_power(-10);
-    //½öÎ´ÈëÍøÊ±³õÊ¼»¯×Ô¶¨Òå¹ã²¥²ÎÊı
+    //ä»…æœªå…¥ç½‘æ—¶åˆå§‹åŒ–è‡ªå®šä¹‰å¹¿æ’­å‚æ•°
     // if(is_provison == WICED_FALSE)
     {
         adv_pack_init();
@@ -678,10 +678,10 @@ void andon_app_encoder_action(void)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void Andon_App_Run_Normal_Mode(void)
 {
@@ -691,7 +691,7 @@ void Andon_App_Run_Normal_Mode(void)
     uint16_t doubleclicktime = 0;
 
     andon_app_staticstata.btn_onoff_lasttime++;
-    //°´¼ü¼ä¸ô³¬¹ı1s£¬ÈÏÎª·ÇÁ¬Ğø°´¼ü
+    //æŒ‰é”®é—´éš”è¶…è¿‡1sï¼Œè®¤ä¸ºéè¿ç»­æŒ‰é”®
     // if(andon_app_staticstata.btn_onoff_lasttime > 1000/ANDON_APP_PERIODIC_TIME_LENGTH){
     //     if(andon_app_staticstata.btn_fastpress_numcnt == 1){
     //         AndonCmd_Action(enumREMOTEACTION_SHORTPRESS,0,ANDONCMD_TRANS_TIME);
@@ -725,12 +725,12 @@ void Andon_App_Run_Normal_Mode(void)
     }
 
     if(andon_app_staticstata.btn_fastpress_numcnt > 0){
-        //Á¬Ğø°´¼ü£¬ÒÔ1sµÄ¼ä¸ô·¢ËÍONOFFÖ¸Áî
+        //è¿ç»­æŒ‰é”®ï¼Œä»¥1sçš„é—´éš”å‘é€ONOFFæŒ‡ä»¤
         andon_app_staticstata.send_onoff_timecnt++;
         // if(andon_app_staticstata.send_onoff_timecnt > 2500/ANDON_APP_PERIODIC_TIME_LENGTH)
         // {
         //     andon_app_staticstata.send_onoff_timecnt = 1;
-        //     //TODO ·¢ËÍONOFFÖ¸Áî
+        //     //TODO å‘é€ONOFFæŒ‡ä»¤
         //     if(andon_app_staticstata.btn_onoff_cmdstata)
         //     {
         //         andon_app_staticstata.btn_onoff_cmdstata = WICED_FALSE;
@@ -796,7 +796,7 @@ void Andon_App_Run_Normal_Mode(void)
                     // else if(andon_app_staticstata.send_onoff_timecnt > 1500/ANDON_APP_PERIODIC_TIME_LENGTH)
                     // {
                     //     andon_app_staticstata.send_onoff_timecnt = 1;
-                    //     //TODO ·¢ËÍONOFFÖ¸Áî
+                    //     //TODO å‘é€ONOFFæŒ‡ä»¤
                     //     if(andon_app_staticstata.btn_onoff_cmdstata)
                     //     {
                     //         andon_app_staticstata.btn_onoff_cmdstata = WICED_FALSE;
@@ -816,20 +816,20 @@ void Andon_App_Run_Normal_Mode(void)
         {
             if(btn_state.btn_press_count[BTN_LIGHTNESS_DOWN_INDEX] > 40/ANDON_APP_PERIODIC_TIME_LENGTH)
             {
-                //TODO ·¢ËÍÁÁ¶Èµ÷ÕûÖ¸Áî
+                //TODO å‘é€äº®åº¦è°ƒæ•´æŒ‡ä»¤
             }
         }
         if(btn_state.btn_up & BTN_LIGHTNESS_UP_VALUE)
         {
             if(btn_state.btn_press_count[BTN_LIGHTNESS_UP_INDEX] > 40/ANDON_APP_PERIODIC_TIME_LENGTH)
             {
-                //TODO ·¢ËÍÁÁ¶Èµ÷ÕûÖ¸Áî
+                //TODO å‘é€äº®åº¦è°ƒæ•´æŒ‡ä»¤
             }
         }
     #else
         if(btn_state.btn_encoder_count)
         {
-            //btn_state.btn_idle_count = 0;  //·¢ËÍÊı¾İÊ±£¬ÖØÖÃ°´¼üÊÍ·ÅÊ±¼ä
+            //btn_state.btn_idle_count = 0;  //å‘é€æ•°æ®æ—¶ï¼Œé‡ç½®æŒ‰é”®é‡Šæ”¾æ—¶é—´
             
             if(AndonApp_power_stata < 3)
             {
@@ -846,12 +846,12 @@ void Andon_App_Run_Normal_Mode(void)
                 //     fastturn = 1;
                 // }
 
-                //¼ÆËãµ¥¸öÂö³åµÄÊ±¼ä£¬Èç¹ûĞ¡ÓÚÉè¶¨ÖµÔòÈÏÎªÊÇ¿ìËÙĞı×ª
+                //è®¡ç®—å•ä¸ªè„‰å†²çš„æ—¶é—´ï¼Œå¦‚æœå°äºè®¾å®šå€¼åˆ™è®¤ä¸ºæ˜¯å¿«é€Ÿæ—‹è½¬
                 if(andon_app_staticstata.btn_encoder_end_time){
                     if(andon_app_staticstata.btn_encoder_end_time > andon_app_staticstata.btn_encoder_start_time){
                         uint32_t deltatime;
                         deltatime = andon_app_staticstata.btn_encoder_end_time - andon_app_staticstata.btn_encoder_start_time;
-                        //ÓÉÓÚbtn_encoder_numcntºãÎª¼Ó£¬ËùÒÔ²»»á´æÔÚ0µÄÇé¿ö
+                        //ç”±äºbtn_encoder_numcntæ’ä¸ºåŠ ï¼Œæ‰€ä»¥ä¸ä¼šå­˜åœ¨0çš„æƒ…å†µ
                         if(deltatime/andon_app_staticstata.btn_encoder_numcnt < 20000){
                             fastturn = 1;
                         }
@@ -919,10 +919,10 @@ void Andon_App_Run_Normal_Mode(void)
                     andon_app_staticstata.send_delta_timecnt = 100/ANDON_APP_PERIODIC_TIME_LENGTH;
                     AndonApp_power_stata = 5;
                     first_step = btn_state.btn_encoder_count;
-                    //zhw 20200630 Ö±½Ó´«ËÍdeltaÖµ start
+                    //zhw 20200630 ç›´æ¥ä¼ é€deltaå€¼ start
                     delta_plus = btn_state.btn_encoder_count; 
                     // delta_plus = btn_state.btn_encoder_count*10;  
-                    //zhw 20200630 Ö±½Ó´«ËÍdeltaÖµ end
+                    //zhw 20200630 ç›´æ¥ä¼ é€deltaå€¼ end
 
                     if(delta_plus != 0) 
                     {
@@ -954,7 +954,7 @@ void Andon_App_Run_Normal_Mode(void)
                 {
                     WICED_LOG_DEBUG("btn_state.btn_encoder_count = %d\n", btn_state.btn_encoder_count);
                     
-                    //zhw 20200630 Ö±½Ó´«ËÍdeltaÖµ Start
+                    //zhw 20200630 ç›´æ¥ä¼ é€deltaå€¼ Start
                     // if((delta_plus < 7) || ((andon_app_staticstata.btn_encoder_end_time - andon_app_staticstata.btn_encoder_start_time) > 600000))
                     // {
                     //     if(first_step != 0)
@@ -975,7 +975,7 @@ void Andon_App_Run_Normal_Mode(void)
                         first_step = 0;
                     }
                     delta_plus = btn_state.btn_encoder_count;
-                    //zhw 20200630 Ö±½Ó´«ËÍdeltaÖµ end
+                    //zhw 20200630 ç›´æ¥ä¼ é€deltaå€¼ end
                     if(delta_plus != 0) 
                     {
                         if(fastturn){
@@ -1033,10 +1033,10 @@ extern void wiced_hal_wdog_reset_system(void);
 extern wiced_bool_t clear_flash_for_reset(wiced_bt_mesh_core_config_t *p_config_data,wiced_bt_core_nvram_access_t nvram_access_callback);
 extern void wdog_generate_hw_reset(void);
 //*****************************************************************************
-// º¯ÊıÃû³Æ: Andon_App_Periodic_Timer_Callback
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: Andon_App_Periodic_Timer_Callback
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
 {
@@ -1082,10 +1082,10 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
             wiced_hal_wdog_reset_system();
             return;
         }
-        //Èç¹û³¬¹ı20s£¬ÏµÍ³»¹Ã»´ı»ú£¬ÔòÈÏÎªĞ­ÒéÕ»²»×Ô¶¯½øSDS£¬ÔòÏµÍ³ÖØÆô
+        //å¦‚æœè¶…è¿‡20sï¼Œç³»ç»Ÿè¿˜æ²¡å¾…æœºï¼Œåˆ™è®¤ä¸ºåè®®æ ˆä¸è‡ªåŠ¨è¿›SDSï¼Œåˆ™ç³»ç»Ÿé‡å¯
         else if(reset_flag > 20000/ANDON_APP_PERIODIC_TIME_LENGTH)
         {
-            //ÖØĞÂ³õÊ¼»¯ÕıÔÚÔËĞĞµÄtimerÒÔÊ¹ÏµÍ³ÖØÆô£¬ÕâÖÖ·½Ê½±Èreset¿ì
+            //é‡æ–°åˆå§‹åŒ–æ­£åœ¨è¿è¡Œçš„timerä»¥ä½¿ç³»ç»Ÿé‡å¯ï¼Œè¿™ç§æ–¹å¼æ¯”resetå¿«
             wiced_init_timer(&andon_app_state.periodic_timer, &Andon_App_Periodic_Timer_Callback, 0, WICED_MILLI_SECONDS_PERIODIC_TIMER);
             return;
         }
@@ -1101,7 +1101,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
         if(fact_reset_delay > 1500/ANDON_APP_PERIODIC_TIME_LENGTH)
         {
             uint32_t mesh_nvram_access(wiced_bool_t write, int inx, uint8_t* node_info, uint16_t len, wiced_result_t *p_result);
-            //ÖØĞ´Ò£¿ØÆ÷±»»Ö¸´³ö³§ÉèÖÃµÄindex
+            //é‡å†™é¥æ§å™¨è¢«æ¢å¤å‡ºå‚è®¾ç½®çš„index
             advpackReWriteRemoteIndex();
             StoreBindKey(NULL,0);
             AndonApppaired = WICED_FALSE;
@@ -1114,7 +1114,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
     }
 
     if((andon_app_state.display_mode == ANDON_APP_DISPLAY_TEST_UPGRADEOK)
-        && (andon_app_state.run_mode == ANDON_APP_RUN_TEST)){  //¹¤×°Éı¼¶²âÊÔÍê³É£¬½ö×öÌáÊ¾
+        && (andon_app_state.run_mode == ANDON_APP_RUN_TEST)){  //å·¥è£…å‡çº§æµ‹è¯•å®Œæˆï¼Œä»…åšæç¤º
 #if CHECK_BATTERY_VALUE
         if(lowBatteryFlag == 1) {
             andon_app_state.display_mode = ANDON_APP_DISPLAY_LOWPOWER;
@@ -1185,7 +1185,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
         return;
     }
 
-    if( (btn_state.btn_pairpin_level&0X0F) == 0X00)    //×ÔËø°´¼üµ¯³ö
+    if( (btn_state.btn_pairpin_level&0X0F) == 0X00)    //è‡ªé”æŒ‰é”®å¼¹å‡º
     {
         #ifdef ANDON_BEEP
         if(AndonAppBeepTimer == 0)
@@ -1198,7 +1198,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
             AndonAppBeepTimer = 0;
         }
         #endif // DEBUG
-        if(ANDON_APP_RUN_NORMAL == andon_app_state.run_mode)  //°´¼üµ¯³öÇ°´¦ÓÚ³£¹æÄ£Ê½
+        if(ANDON_APP_RUN_NORMAL == andon_app_state.run_mode)  //æŒ‰é”®å¼¹å‡ºå‰å¤„äºå¸¸è§„æ¨¡å¼
         {
             keyscan_stuck_key_in_second = 240;
             WICED_LOG_DEBUG("set_allow_sleep_flag WICED_FALSE\r\n");
@@ -1206,7 +1206,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
             if(WICED_TRUE == andon_app_state.is_provison)
             {
                 andon_app_state.run_mode = ANDON_APP_RUN_APP_PROVISION;
-                //ÆôÓÃÒ£¿ØÆ÷Åä¶Ô¹¦ÄÜ
+                //å¯ç”¨é¥æ§å™¨é…å¯¹åŠŸèƒ½
                 //AndonPair_DeInit(WICED_FALSE);
                 AndonPair_Init(Andon_App_AdvPairDone);
             }
@@ -1216,7 +1216,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
                 appconnadvenable = WICED_TRUE;
                 appAndonBleConnectUsed();
                 LOG_DEBUG("start wyze Adv!!!!! \n");
-                //ÓëµÆÅä¶Ô¹¦ÄÜ³õÊ¼»¯
+                //ä¸ç¯é…å¯¹åŠŸèƒ½åˆå§‹åŒ–
                 AndonPair_Init(Andon_App_AdvPairDone);
             }
             WICED_LOG_DEBUG("Goto ANDON_APP_DISPLAY_PAIR_DOING\n");
@@ -1235,9 +1235,9 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
         andon_app_state.display_mode = ANDON_APP_DISPLAY_NORMAL;
 
         WICED_LOG_DEBUG("1.....!!!\n");
-        //½ûÓÃÒ£¿ØÆ÷Åä¶Ô¹¦ÄÜ
+        //ç¦ç”¨é¥æ§å™¨é…å¯¹åŠŸèƒ½
         AndonApp_pair_stata = ANDONPAIR_PAIR_IDLE;
-        //Á¬½ÓAppÊ±Ö±½Ó¶Ï¿ªÁ¬½Ó
+        //è¿æ¥Appæ—¶ç›´æ¥æ–­å¼€è¿æ¥
         if(mesh_app_gatt_is_connected()){
             mesh_app_gatt_is_disconnected();
         }
@@ -1263,7 +1263,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
     //     }
     // }
     
-    //ÍøÂçÌ¬°´¼ü×´Ì¬ÌáĞÑ
+    //ç½‘ç»œæ€æŒ‰é”®çŠ¶æ€æé†’
     if(ANDON_APP_RUN_NORMAL != andon_app_state.run_mode)
     {
         //btn_state.btn_idle_count = 0;
@@ -1348,13 +1348,13 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
     //     andon_app_state.is_provison = WICED_TRUE;
     // }
     DisplayRefresh((AndonApppaired==WICED_TRUE)?WICED_TRUE:andon_app_state.is_provison);
-    //App¿ÕÏĞ&&1sÎŞ°´¼ü&&ÆÕÍ¨¹¤×÷Ä£Ê½
+    //Appç©ºé—²&&1sæ— æŒ‰é”®&&æ™®é€šå·¥ä½œæ¨¡å¼
     if( ANDON_APP_RUN_NORMAL == andon_app_state.run_mode) 
     {
         if ((btn_state.btn_idle_count > 3000/ANDON_APP_PERIODIC_TIME_LENGTH)
             && ((btn_state.btn_pairpin_level &0X0F) == 0X0F) )
         {
-            //µÍµçÄ£Ê½²»ÔÊĞíĞİÃß
+            //ä½ç”µæ¨¡å¼ä¸å…è®¸ä¼‘çœ 
             if((WICED_TRUE == andon_app_state.runing) && (andon_app_state.display_mode != ANDON_APP_DISPLAY_LOWPOWER))
             {
                 if(!mesh_app_node_is_provisioned())
@@ -1386,9 +1386,9 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
     
     switch(andon_app_state.run_mode)
     {
-        case ANDON_APP_RUN_NORMAL:          //ÆÕÍ¨Ä£Ê½ Ê¶±ğµ½°´¼üÖ®ºó·¢ËÍÖ¸Áî 
+        case ANDON_APP_RUN_NORMAL:          //æ™®é€šæ¨¡å¼ è¯†åˆ«åˆ°æŒ‰é”®ä¹‹åå‘é€æŒ‡ä»¤ 
         {
-            //ÎŞ°´¼ü&&·ÇµÍµç
+            //æ— æŒ‰é”®&&éä½ç”µ
             if(btn_state.btn_idle_count < 2)  
             {
                 WICED_LOG_DEBUG("set_allow_sleep_flag WICED_FALSE\r\n");
@@ -1409,17 +1409,17 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
             }
             break;
         }
-        case ANDON_APP_RUN_WAIT_PROVISION:  //´ËÄ£Ê½ÏÂµÈ´ıÅäÍø£¬ÔÚµÈ´ıÅäÍø¹ı³ÌÖĞ°´ÏÂON/OFF¼ü£¬Æô¶¯Ò£¿ØÆ÷Åä¶Ô
+        case ANDON_APP_RUN_WAIT_PROVISION:  //æ­¤æ¨¡å¼ä¸‹ç­‰å¾…é…ç½‘ï¼Œåœ¨ç­‰å¾…é…ç½‘è¿‡ç¨‹ä¸­æŒ‰ä¸‹ON/OFFé”®ï¼Œå¯åŠ¨é¥æ§å™¨é…å¯¹
         case ANDON_APP_RUN_APP_PROVISION:
         {
             btnKeyScanStart();
-            //Î´ÈëÍøÊ±£¬°´ON/OFF¼üÆô¶¯Åä¶Ô
+            //æœªå…¥ç½‘æ—¶ï¼ŒæŒ‰ON/OFFé”®å¯åŠ¨é…å¯¹
             if(btn_state.btn_up & BTN_ONOFF_VALUE) 
             {
                 WICED_LOG_DEBUG("ON/OFF btn release  pressed time %d!!!\n",btn_state.btn_press_count[BTN_ONOFF_INDEX]);
                 if(btn_state.btn_press_count[BTN_ONOFF_INDEX] > 10000/ANDON_APP_PERIODIC_TIME_LENGTH)
                 {
-                    //Í£Ö¹Åä¶Ô
+                    //åœæ­¢é…å¯¹
                     AndonPair_Stop();
                     AndonApp_pair_stata = ANDONPAIR_PAIR_IDLE;
                     andon_app_state.display_mode = ANDON_APP_DISPLAY_NORMAL;
@@ -1428,7 +1428,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
                 {
                     // if(AndonApp_pair_stata == ANDONPAIR_PAIR_IDLE)
                     // {
-                    //     //Æô¶¯°´¼üÅä¶Ô
+                    //     //å¯åŠ¨æŒ‰é”®é…å¯¹
                     //     AndonPair_Start();
                     //     WICED_LOG_DEBUG("Goto ANDON_APP_DISPLAY_PAIR_DOING\n");
                     //     AndonApp_pair_stata = ANDONPAIR_PAIR_DOING;
@@ -1437,7 +1437,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
                     // else 
                     if(AndonApp_pair_stata == ANDONPAIR_PAIR_DOING)
                     {
-                        //È·ÈÏÅä¶Ô
+                        //ç¡®è®¤é…å¯¹
                         AndonPair_Paired(); 
                         AndonApp_pair_stata = ANDONPAIR_PAIR_DONE;
                         displaytime = 0;
@@ -1447,7 +1447,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
                         
             if((btn_state.btn_encoder_count) && (btn_state.btn_idle_count > 500/ANDON_APP_PERIODIC_TIME_LENGTH))
             {
-                if(AndonApp_pair_stata == ANDONPAIR_PAIR_IDLE)  //¿ÕÏĞ×´Ì¬ Æô¶¯ÅäÍø
+                if(AndonApp_pair_stata == ANDONPAIR_PAIR_IDLE)  //ç©ºé—²çŠ¶æ€ å¯åŠ¨é…ç½‘
                 {
                     // AndonPair_Start();
                     AndonPair_Init(Andon_App_AdvPairDone);
@@ -1455,7 +1455,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
                     AndonApp_pair_stata = ANDONPAIR_PAIR_DOING;
                     displaytime = 0;
                 }
-                else if(AndonApp_pair_stata == ANDONPAIR_PAIR_DOING)  //½öÔÚ·¢ËÍÕÒµÆÖ¸ÁîµÄ¹ı³ÌÖĞ£¬Ğı×ªÇĞ»»µÆ
+                else if(AndonApp_pair_stata == ANDONPAIR_PAIR_DOING)  //ä»…åœ¨å‘é€æ‰¾ç¯æŒ‡ä»¤çš„è¿‡ç¨‹ä¸­ï¼Œæ—‹è½¬åˆ‡æ¢ç¯
                 {
                     WICED_LOG_DEBUG("next\n");
                     AndonPair_Next(btn_state.btn_encoder_count);
@@ -1463,12 +1463,12 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
                 }
             }
             
-            // Èç¹ûÔÚ°´¼üÅä¶Ô¹ı³ÌÖĞ
+            // å¦‚æœåœ¨æŒ‰é”®é…å¯¹è¿‡ç¨‹ä¸­
             if(ANDONPAIR_PAIR_DOING == AndonApp_pair_stata)
             {
                 andon_app_state.display_mode = ANDON_APP_DISPLAY_PAIR_DOING;
             }
-            // °´¼üÅä¶ÔÍê³É
+            // æŒ‰é”®é…å¯¹å®Œæˆ
             else if(ANDONPAIR_PAIR_DONE == AndonApp_pair_stata)
             {
                 displaytime++;
@@ -1482,7 +1482,7 @@ static void Andon_App_Periodic_Timer_Callback(uint32_t arg)
                 // andon_app_state.display_mode = ANDON_APP_DISPLAY_PAIR_SUCCESS;
 
             }
-            // Åä¶ÔÊ§°Ü
+            // é…å¯¹å¤±è´¥
             else if(ANDONPAIR_PAIR_FAILED == AndonApp_pair_stata)
             {
                 displaytime++;
@@ -1587,7 +1587,7 @@ wiced_bool_t appAndonBleConnectUsed(void)
 
             // wiced_bt_dev_read_local_addr(devdata+4);
 
-            //´Ë´¦Ìî³äµÄmacĞèÓëDIDÖĞµÄmac±£³ÖÒ»ÖÂ
+            //æ­¤å¤„å¡«å……çš„macéœ€ä¸DIDä¸­çš„macä¿æŒä¸€è‡´
             LOG_DEBUG("mesh_system_id: %s\n",mesh_system_id);
             for(uint8_t i=0;i<12;i+=2)
             {

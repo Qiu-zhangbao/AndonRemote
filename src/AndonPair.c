@@ -1,19 +1,19 @@
 //******************************************************************************
 //*
-//* ÎÄ ¼ş Ãû : AndonPair.c
-//* ÎÄ¼şÃèÊö :  Ò£¿ØÆ÷ÓëµÆ¼äÅä¶Ô¹ı³ÌµÄÏà¹Ø´¦Àí      
-//* ×÷    Õß : ÕÅÍş/Andon Health CO.Ltd
-//* °æ    ±¾ : V0.0
-//* ÈÕ    ÆÚ : 
+//* æ–‡ ä»¶ å : AndonPair.c
+//* æ–‡ä»¶æè¿° :  é¥æ§å™¨ä¸ç¯é—´é…å¯¹è¿‡ç¨‹çš„ç›¸å…³å¤„ç†      
+//* ä½œ    è€… : å¼ å¨/Andon Health CO.Ltd
+//* ç‰ˆ    æœ¬ : V0.0
+//* æ—¥    æœŸ : 
 //*
-//* ¸üĞÂÀúÊ· : 
-//*     ÈÕÆÚ       ×÷Õß    °æ±¾     ÃèÊö
+//* æ›´æ–°å†å² : 
+//*     æ—¥æœŸ       ä½œè€…    ç‰ˆæœ¬     æè¿°
 //*         
 //*          
 //******************************************************************************
 
 ///*****************************************************************************
-///*                         °üº¬ÎÄ¼şËµÃ÷
+///*                         åŒ…å«æ–‡ä»¶è¯´æ˜
 ///*****************************************************************************
 #include "wiced_bt_trace.h"
 #include "wiced_memory.h"
@@ -26,14 +26,14 @@
 #include "includes.h"
 
 ///*****************************************************************************
-///*                         ºê¶¨ÒåÇø
+///*                         å®å®šä¹‰åŒº
 ///*****************************************************************************
 #define TAG  "AndonPair"
 #define WICED_LOG_LEVEL   WICDE_DEBUG_LEVEL
 
 #define ADV_PAIR_DEVICE_MAXNUM        20
 ///*****************************************************************************
-///*                         Strcut½á¹¹±äÁ¿¶¨ÒåÇø
+///*                         Strcutç»“æ„å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 typedef struct{
     wiced_bool_t             AndonPair_doing;
@@ -57,34 +57,34 @@ typedef struct
 } mesh_paircache_t;
 
 ///*****************************************************************************
-///*                         º¯ÊıÉùÃ÷Çø
+///*                         å‡½æ•°å£°æ˜åŒº
 ///*****************************************************************************
 extern void AppGetMyMac(wiced_bt_device_address_t p_data);
 
 ///*****************************************************************************
-///*                         ³£Á¿¶¨ÒåÇø
+///*                         å¸¸é‡å®šä¹‰åŒº
 ///*****************************************************************************
 
 ///*****************************************************************************
-///*                         Íâ²¿È«¾Ö±äÁ¿¶¨ÒåÇø
+///*                         å¤–éƒ¨å…¨å±€å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 
 ///*****************************************************************************
-///*                         ÎÄ¼şÄÚ²¿È«¾Ö±äÁ¿¶¨ÒåÇø
+///*                         æ–‡ä»¶å†…éƒ¨å…¨å±€å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 static AndonPair_handle_t AndonPair_handle;
 static mesh_paircache_t   AndonPair_Cache;
 static wiced_bt_device_address_t paried_addr;
 
 ///*****************************************************************************
-///*                         º¯ÊıÊµÏÖÇø
+///*                         å‡½æ•°å®ç°åŒº
 ///*****************************************************************************
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_SendPairStart
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_SendPairStart
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 static inline void AndonPair_SendPairStart(void)
 {
@@ -94,10 +94,10 @@ static inline void AndonPair_SendPairStart(void)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_Wakeup
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_Wakeup
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 static inline void AndonPair_Wakeup(void)
 {
@@ -108,10 +108,10 @@ static inline void AndonPair_Wakeup(void)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_SendPaired
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_SendPaired
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 static inline void AndonPair_SendPaired(wiced_bt_device_address_t dst_mac)
 {
@@ -124,10 +124,10 @@ static inline void AndonPair_SendPaired(wiced_bt_device_address_t dst_mac)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_SendPairSelect
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_SendPairSelect
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 static inline void AndonPair_SendPairSelect(wiced_bt_device_address_t dst_mac)
 {
@@ -140,10 +140,10 @@ static inline void AndonPair_SendPairSelect(wiced_bt_device_address_t dst_mac)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Periodic_Timer_Callback(uint32_t param)
 {
@@ -151,7 +151,7 @@ void AndonPair_Periodic_Timer_Callback(uint32_t param)
     {
         return;
     }
-    // ³¬Ê±µÄ¼ì²â
+    // è¶…æ—¶çš„æ£€æµ‹
     if(AndonPair_handle.AndonPair_timer_cnt > ANDONPAIR_PAIRTIMELENGTH)
     {
         AndonPair_Stop();
@@ -164,8 +164,8 @@ void AndonPair_Periodic_Timer_Callback(uint32_t param)
         return;
     }
 
-    //3s·¢ËÍÒ»´ÎÅä¶ÔÇëÇó
-    if(0 == (AndonPair_handle.AndonPair_timer_cnt%3))  //Æô¶¯ºóÖ÷¶¯·¢ËÍ
+    //3så‘é€ä¸€æ¬¡é…å¯¹è¯·æ±‚
+    if(0 == (AndonPair_handle.AndonPair_timer_cnt%3))  //å¯åŠ¨åä¸»åŠ¨å‘é€
     {
         AndonPair_SendPairStart();
     }
@@ -173,10 +173,10 @@ void AndonPair_Periodic_Timer_Callback(uint32_t param)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: mesh_btn_adv_paircmd_handle
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: mesh_btn_adv_paircmd_handle
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, void *data,uint8_t len)
 {
@@ -185,29 +185,29 @@ void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, voi
 
     uint16_t i = 0;
 
-    //TODO ½ÓÊÕ°ó¶¨È·ÈÏµÄ´¦Àí
+    //TODO æ¥æ”¶ç»‘å®šç¡®è®¤çš„å¤„ç†
     
-    //Ò»´Î½ø½øĞĞÒ»¸öÉè±¸µÄÅä¶Ô Ò£¿ØÆ÷½öÄÜÊÕµ½Åä¶Ô»Ø¸´ ÊÕµ½µÄÖ¸ÁîÄÚÈİ²»ÕıÈ·²»½øĞĞ´¦Àí
+    //ä¸€æ¬¡è¿›è¿›è¡Œä¸€ä¸ªè®¾å¤‡çš„é…å¯¹ é¥æ§å™¨ä»…èƒ½æ”¶åˆ°é…å¯¹å›å¤ æ”¶åˆ°çš„æŒ‡ä»¤å†…å®¹ä¸æ­£ç¡®ä¸è¿›è¡Œå¤„ç†
     // WICED_LOG_DEBUG("Receive pair response form %B \r\n",remote_mac);
     // WICED_LOG_DEBUG("AndonPair_handle.AndonPair_doing = 0x%02x \r\n",AndonPair_handle.AndonPair_doing);
     if((WICED_TRUE != AndonPair_handle.AndonPair_doing ) || (cmd != ADV_CMD_PARI))
         return;
     
-    //»ñÈ¡±¾µØMAC
+    //è·å–æœ¬åœ°MAC
     //wiced_bt_dev_read_local_addr(own_bd_addr); 
     AppGetMyMac(own_bd_addr); 
     // WICED_LOG_DEBUG("receive from %B %B %B\r\n",remote_mac,p_adv_data->dst_mac,own_bd_addr);
-    //ÓÉÓÚÊ¹ÓÃµÄ¾²Ì¬Ëæ»úµØÖ·£¬Í¬Ê±Ê¹ÓÃÁËMACµÄ×î¸ßÁ½Î»±êÊ¶Ò£¿ØÆ÷»Ö¸´³ö³§ÉèÖÃµÄ´ÎÊı£¬ÔÚ±È¶ÔÇ°Ó¦½«ÊÕÈ¡µÄMAC×î¸ßÎ»»ò0xC0
+    //ç”±äºä½¿ç”¨çš„é™æ€éšæœºåœ°å€ï¼ŒåŒæ—¶ä½¿ç”¨äº†MACçš„æœ€é«˜ä¸¤ä½æ ‡è¯†é¥æ§å™¨æ¢å¤å‡ºå‚è®¾ç½®çš„æ¬¡æ•°ï¼Œåœ¨æ¯”å¯¹å‰åº”å°†æ”¶å–çš„MACæœ€é«˜ä½æˆ–0xC0
     *(uint8_t *)(p_adv_data->dst_mac) |= 0xC0;
     *(uint8_t *)(own_bd_addr) |= 0xC0;
-    //°ó¶¨µÄ²»ÊÇ±¾Ò£¿ØÆ÷
+    //ç»‘å®šçš„ä¸æ˜¯æœ¬é¥æ§å™¨
     if(0 != memcmp(p_adv_data->dst_mac,own_bd_addr,sizeof(wiced_bt_device_address_t)))
     {
         return;
     }
 
     if(ADV_PARILOAD_PAIREDACK == p_adv_data->pair_stata){
-        // //°ó¶¨Íê³É
+        // //ç»‘å®šå®Œæˆ
         // if(0 == memcmp(paried_addr,remote_mac,sizeof(wiced_bt_device_address_t)))
         // {
         //     if(NULL != AndonPair_handle.AndonPair_Done_cback)
@@ -223,7 +223,7 @@ void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, voi
 
     
     
-    //ÊÇ·ñÒÑ¾­´æ´¢ÔÚcacheÖĞ
+    //æ˜¯å¦å·²ç»å­˜å‚¨åœ¨cacheä¸­
     for(i=0; i<AndonPair_Cache.max_pair_cacheIndex && i < ADV_PAIR_DEVICE_MAXNUM; i++)
     {
         if(0 == memcmp(remote_mac,AndonPair_Cache.pair_device_cache[i],sizeof(wiced_bt_device_address_t)))
@@ -233,7 +233,7 @@ void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, voi
     }
     WICED_LOG_DEBUG("receive from %B \r\n",remote_mac);
     memset(own_bd_addr,0,sizeof(wiced_bt_device_address_t));
-    //²éÕÒÊ¹ÓÃµÄcacheÖĞÊÇ·ñÓĞ¿ÕÏĞÎ»ÖÃ
+    //æŸ¥æ‰¾ä½¿ç”¨çš„cacheä¸­æ˜¯å¦æœ‰ç©ºé—²ä½ç½®
     for(i=0; i<AndonPair_Cache.max_pair_cacheIndex && i < ADV_PAIR_DEVICE_MAXNUM; i++)
     {
         if(0 == memcmp(AndonPair_Cache.pair_device_cache[i],own_bd_addr,sizeof(wiced_bt_device_address_t)))
@@ -243,7 +243,7 @@ void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, voi
         }
     }
     
-    //»º³åÇøÎ´ÂúµÄ´æ´¢µ±Ç°mac£¬ÂúµÄ»°Ôò¶ªÆú
+    //ç¼“å†²åŒºæœªæ»¡çš„å­˜å‚¨å½“å‰macï¼Œæ»¡çš„è¯åˆ™ä¸¢å¼ƒ
     if(AndonPair_Cache.max_pair_cacheIndex < ADV_PAIR_DEVICE_MAXNUM)
     {
         memcpy(AndonPair_Cache.pair_device_cache[AndonPair_Cache.max_pair_cacheIndex],
@@ -260,10 +260,10 @@ void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, voi
     }
     
     
-    //Èç¹ûÊÇµÚÒ»¸ö£¬Ö±½Ó·¢ËÍÉÁË¸Ö¸Áî
+    //å¦‚æœæ˜¯ç¬¬ä¸€ä¸ªï¼Œç›´æ¥å‘é€é—ªçƒæŒ‡ä»¤
     if(AndonPair_Cache.max_pair_cacheIndex == 1)
     {
-        //·¢ËÍÉÁË¸Ö¸Áî
+        //å‘é€é—ªçƒæŒ‡ä»¤
         AndonPair_handle.AndonPair_SelectLightFlag = WICED_TRUE;
         AndonPair_SendPairSelect(remote_mac);  
     }
@@ -278,10 +278,10 @@ void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, voi
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Paired(void)
 {
@@ -298,7 +298,7 @@ void AndonPair_Paired(void)
     temp = (AndonPair_Cache.max_pair_cacheIndex<ADV_PAIR_DEVICE_MAXNUM)?AndonPair_Cache.max_pair_cacheIndex:ADV_PAIR_DEVICE_MAXNUM;
     if( AndonPair_Cache.current_pair_cacheIndex < temp ) 
     {
-        //Èç¹ûµ±Ç°Î»ÖÃ´æ´¢µÄMACÎª¿Õ£¬²»·¢ËÍÅä¶ÔÈ·ÈÏÖ¸Áî
+        //å¦‚æœå½“å‰ä½ç½®å­˜å‚¨çš„MACä¸ºç©ºï¼Œä¸å‘é€é…å¯¹ç¡®è®¤æŒ‡ä»¤
         if(0 == memcmp(AndonPair_Cache.pair_device_cache[AndonPair_Cache.current_pair_cacheIndex],
                        empty_mac,sizeof(wiced_bt_device_address_t)))
         {
@@ -324,10 +324,10 @@ void AndonPair_Paired(void)
     
 }
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Next(int16_t temp0)
 {
@@ -346,7 +346,7 @@ void AndonPair_Next(int16_t temp0)
     
     for(i=0; i<temp; i++)
     {
-        //²éÕÒÏÂÒ»¸ö²»Îª¿ÕµÄÎ»ÖÃ
+        //æŸ¥æ‰¾ä¸‹ä¸€ä¸ªä¸ä¸ºç©ºçš„ä½ç½®
         if(temp0 > 0)
         {
             delta_num = (AndonPair_Cache.current_pair_cacheIndex+i+1)%temp;
@@ -375,10 +375,10 @@ void AndonPair_Next(int16_t temp0)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_Stop
-// º¯ÊıÃèÊö: Í£Ö¹Ò£¿ØÆ÷Åä¶Ô
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_Stop
+// å‡½æ•°æè¿°: åœæ­¢é¥æ§å™¨é…å¯¹
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Stop(void)
 {
@@ -395,10 +395,10 @@ void AndonPair_Stop(void)
 static uint8_t rsttimer_tick = 0;
 static wiced_timer_t Pair_Stoptimer;
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_Stop
-// º¯ÊıÃèÊö: Í£Ö¹Ò£¿ØÆ÷Åä¶Ô
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_Stop
+// å‡½æ•°æè¿°: åœæ­¢é¥æ§å™¨é…å¯¹
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 static void AndonPair_Stoptimer_callback(uint32_t arg)
 {
@@ -418,10 +418,10 @@ static void AndonPair_Stoptimer_callback(uint32_t arg)
     }
 }
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_Start
-// º¯ÊıÃèÊö: Æô¶¯Ò£¿ØÆ÷Åä¶Ô
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_Start
+// å‡½æ•°æè¿°: å¯åŠ¨é¥æ§å™¨é…å¯¹
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Start(void)
 {
@@ -435,14 +435,14 @@ void AndonPair_Start(void)
     AndonPair_handle.AndonPair_doing = WICED_TRUE;
     wiced_start_timer(&AndonPair_handle.AndonPair_timer,1);
     AndonPair_handle.AndonPair_timer_cnt = 0;   
-    //AndonPair_SendPairStart();           //ÔÚ¶¨Ê±Æ÷ÖĞÑÓ³Ù1sÆô¶¯²éÕÒµÆÖ¸Áî
+    //AndonPair_SendPairStart();           //åœ¨å®šæ—¶å™¨ä¸­å»¶è¿Ÿ1så¯åŠ¨æŸ¥æ‰¾ç¯æŒ‡ä»¤
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_Unband
-// º¯ÊıÃèÊö: Éè±¸½â°ó
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_Unband
+// å‡½æ•°æè¿°: è®¾å¤‡è§£ç»‘
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Unband(void)
 {
@@ -465,10 +465,10 @@ void AndonPair_Unband(void)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: AndonPair_ResetFactor1
-// º¯ÊıÃèÊö: Ê¹ÓÃÒ£¿ØÆ÷½«µÆ»Ö¸´¹¤³§Ä£Ê½Ö¸Áî
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: AndonPair_ResetFactor1
+// å‡½æ•°æè¿°: ä½¿ç”¨é¥æ§å™¨å°†ç¯æ¢å¤å·¥å‚æ¨¡å¼æŒ‡ä»¤
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_ResetFactor1(void)
 {
@@ -478,10 +478,10 @@ void AndonPair_ResetFactor1(void)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_Init(AndonPair_Done_cback_t *cback)
 {
@@ -494,17 +494,17 @@ void AndonPair_Init(AndonPair_Done_cback_t *cback)
     }
     memset(&AndonPair_Cache,0,sizeof(mesh_paircache_t));
     wiced_init_timer(&AndonPair_handle.AndonPair_timer, &AndonPair_Periodic_Timer_Callback, 0, WICED_SECONDS_PERIODIC_TIMER);
-    //·¢ËÍ»½ĞÑÖ¸Áî
+    //å‘é€å”¤é†’æŒ‡ä»¤
     mesh_start_stop_scan_callback(WICED_TRUE,WICED_FALSE);
     AndonPair_Wakeup();
-    AndonPair_Start();//Ö±½Ó·¢ËÍÆô¶¯Ö¸Áî
+    AndonPair_Start();//ç›´æ¥å‘é€å¯åŠ¨æŒ‡ä»¤
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: 
-// º¯ÊıÃèÊö: 
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: 
+// å‡½æ•°æè¿°: 
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void AndonPair_DeInit(wiced_bool_t para)
 {
@@ -512,7 +512,7 @@ void AndonPair_DeInit(wiced_bool_t para)
     //AndonPair_SendPairSelect(empty_mac);
     //WICED_LOG_DEBUG("blink mac %B  stop paired \r\n",empty_mac);
 
-    // ¸ü¸ÄÎª°´ÏÂÅäÍø¼üÆô¶¯ÅäÍø£¬Ò»µ©Æô¶¯Ñ¡µÆÔò²»ÄÜÍ£Ö¹ 20.3.30
+    // æ›´æ”¹ä¸ºæŒ‰ä¸‹é…ç½‘é”®å¯åŠ¨é…ç½‘ï¼Œä¸€æ—¦å¯åŠ¨é€‰ç¯åˆ™ä¸èƒ½åœæ­¢ 20.3.30
     // if(para == WICED_TRUE) 
     // {
     //     if(wiced_is_timer_in_use(&Pair_Stoptimer))
