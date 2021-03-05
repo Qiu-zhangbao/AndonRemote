@@ -158,6 +158,7 @@ wiced_bt_ble_multi_adv_params_t  adv_pairadv_params =
     .channel_map = BTM_BLE_DEFAULT_ADVERT_CHNL_MAP,            /**< Adv channel map */
     .adv_filter_policy = BTM_BLE_ADVERT_FILTER_WHITELIST_CONNECTION_REQ_WHITELIST_SCAN_REQ,      /**< Advertising filter policy */
     .adv_tx_power = MULTI_ADV_TX_POWER_MAX,           /**< Adv tx power */
+    // .adv_tx_power = 8,             /**< Adv tx power */
     .peer_bd_addr = {0},           /**< Peer Device address */
     .peer_addr_type = BLE_ADDR_RANDOM,         /**< Peer LE Address type */
     .own_bd_addr = {0},            /**< Own LE address */
@@ -172,6 +173,7 @@ wiced_bt_ble_multi_adv_params_t adv_manudevadv_params =
     .channel_map = BTM_BLE_DEFAULT_ADVERT_CHNL_MAP,                                         /**< Adv channel map */
     .adv_filter_policy = BTM_BLE_ADVERT_FILTER_WHITELIST_CONNECTION_REQ_WHITELIST_SCAN_REQ, /**< Advertising filter policy */
     .adv_tx_power = MULTI_ADV_TX_POWER_MAX,                                                 /**< Adv tx power */
+    // .adv_tx_power = 8,                                                 /**< Adv tx power */
     .peer_bd_addr = {0},                                                                    /**< Peer Device address */
     .peer_addr_type = BLE_ADDR_RANDOM,                                                      /**< Peer LE Address type */
     .own_bd_addr = {0},                                                                     /**< Own LE address */
@@ -199,10 +201,10 @@ static void mesh_generate_random(uint8_t* random, uint8_t len)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: CrcCalc
-// å‡½æ•°æè¿°: è‡ªå®šä¹‰å¹¿æ’­çš„åˆå§‹åŒ–--ç”¨äºä¸ç¯çš„äº¤äº’å†…å®¹
-// å‡½æ•°è¾“å…¥:  
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: CrcCalc
+// º¯ÊıÃèÊö: ×Ô¶¨Òå¹ã²¥µÄ³õÊ¼»¯--ÓÃÓÚÓëµÆµÄ½»»¥ÄÚÈİ
+// º¯ÊıÊäÈë:  
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 uint16_t CrcCalc(uint8_t *data, uint16_t length)
 {
@@ -231,11 +233,11 @@ uint16_t CrcCalc(uint8_t *data, uint16_t length)
 
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_manuDevAdvStart
-// å‡½æ•°æè¿°: è®¾ç½®å¹¿æ’­å‚æ•°å¹¶å¯åŠ¨å¹¿æ’­---Wyzeå¹¿æ’­æ ¼å¼
-// å‡½æ•°è¾“å…¥:  *dataï¼šå¾…å¹¿æ’­æ•°æ®  
-//            lenï¼šæ•°æ®é•¿åº¦
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: adv_manuDevAdvStart
+// º¯ÊıÃèÊö: ÉèÖÃ¹ã²¥²ÎÊı²¢Æô¶¯¹ã²¥---Wyze¹ã²¥¸ñÊ½
+// º¯ÊıÊäÈë:  *data£º´ı¹ã²¥Êı¾İ  
+//            len£ºÊı¾İ³¤¶È
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void adv_manuDevAdvStart(uint8_t *data, uint8_t len)
 {
@@ -270,10 +272,10 @@ void adv_manuDevAdvStart(uint8_t *data, uint8_t len)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_manuDevAdvStop
-// å‡½æ•°æè¿°: åœæ­¢å¹¿æ’­---Wyzeå¹¿æ’­æ ¼å¼
-// å‡½æ•°è¾“å…¥:  
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: adv_manuDevAdvStop
+// º¯ÊıÃèÊö: Í£Ö¹¹ã²¥---Wyze¹ã²¥¸ñÊ½
+// º¯ÊıÊäÈë:  
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void adv_manuDevAdvStop(void)
 {
@@ -281,11 +283,11 @@ void adv_manuDevAdvStop(void)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_manuadv_send
-// å‡½æ•°æè¿°: è®¾ç½®å¹¿æ’­å‚æ•°å¹¶å‘é€æ•°æ®---è‡ªç»„ç½‘ä½¿ç”¨
-// å‡½æ•°è¾“å…¥:  *dataï¼šå¾…å¹¿æ’­æ•°æ®  
-//            lenï¼šæ•°æ®é•¿åº¦
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: adv_manuadv_send
+// º¯ÊıÃèÊö: ÉèÖÃ¹ã²¥²ÎÊı²¢·¢ËÍÊı¾İ---×Ô×éÍøÊ¹ÓÃ
+// º¯ÊıÊäÈë:  *data£º´ı¹ã²¥Êı¾İ  
+//            len£ºÊı¾İ³¤¶È
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void adv_manuadv_send(uint8_t *data,uint8_t len)
 {
@@ -324,10 +326,10 @@ void adv_manuadv_send(uint8_t *data,uint8_t len)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_send_Scheduling
-// å‡½æ•°æè¿°: å¹¿æ’­æ•°æ®çš„è°ƒåº¦å¤„ç†ï¼Œæ•°æ®å¼€å§‹å‘é€æˆ–å‘é€å®Œæˆåè°ƒç”¨æ­¤å‡½æ•°ç¡®å®šæ˜¯å¦å°†æ•°æ®å‘é€
-// å‡½æ•°è¾“å…¥:  paramsï¼šå¹¿æ’­æ•°æ®å‘é€çŠ¶æ€
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: adv_send_Scheduling
+// º¯ÊıÃèÊö: ¹ã²¥Êı¾İµÄµ÷¶È´¦Àí£¬Êı¾İ¿ªÊ¼·¢ËÍ»ò·¢ËÍÍê³Éºóµ÷ÓÃ´Ëº¯ÊıÈ·¶¨ÊÇ·ñ½«Êı¾İ·¢ËÍ
+// º¯ÊıÊäÈë:  params£º¹ã²¥Êı¾İ·¢ËÍ×´Ì¬
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 static void adv_send_Scheduling(void)
 {
@@ -342,14 +344,14 @@ static void adv_send_Scheduling(void)
     }
     else
     {
-        //è¿˜åœ¨å‘é€è¿‡ç¨‹ä¸­ï¼Œè¯´æ˜å‘é€ç¼“å­˜æ»¡äº†
+        //»¹ÔÚ·¢ËÍ¹ı³ÌÖĞ£¬ËµÃ÷·¢ËÍ»º´æÂúÁË
         if(WICED_TRUE == adv_send_enable)
         {
             memset(adv_fifo_out[adv_fifo_out_optr].adv_array,0,sizeof(adv_send_data_t));
             adv_fifo_out_optr = adv_fifo_optr_plus(adv_fifo_out_optr, 1);
             adv_manuadv_send(adv_fifo_out[adv_fifo_out_optr].adv_array, ADV_PACK_LEN);
         }
-        else //å‘é€å®Œæˆ
+        else //·¢ËÍÍê³É
         {
             wiced_start_multi_advertisements(MULTI_ADVERT_STOP, ADV_PAIRADV_INDEX);
             adv_send_enable = WICED_FALSE;
@@ -358,15 +360,15 @@ static void adv_send_Scheduling(void)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_manuadv_send_handle
-// å‡½æ•°æè¿°: è‡ªå®šä¹‰å¹¿æ’­æ•°æ®å‘é€å®Œæˆçš„å›è°ƒå¤„ç†å‡½æ•°
-// å‡½æ•°è¾“å…¥:  paramsï¼šå¹¿æ’­æ•°æ®å‘é€çŠ¶æ€
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: adv_manuadv_send_handle
+// º¯ÊıÃèÊö: ×Ô¶¨Òå¹ã²¥Êı¾İ·¢ËÍÍê³ÉµÄ»Øµ÷´¦Àíº¯Êı
+// º¯ÊıÊäÈë:  params£º¹ã²¥Êı¾İ·¢ËÍ×´Ì¬
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 static void adv_manuadv_send_handle( uint32_t params)
 {
-    //TODO !!!!!   é˜²æ­¢SDKè¿è¡Œå¼‚å¸¸,æ„å¤–æŠ›å‡ºä¸ä½¿ç”¨è¿™ä¸ªå¹¿æ’­çš„å‘é€çŠ¶æ€å›è°ƒï¼Œ
-    //ä½†æ˜¯è¿™ä¹ˆåšæ˜¯æœ‰é£é™©çš„ï¼Œæ‰‹å†Œé‡Œè¯´çš„æ˜¯æ­¤å¤„è¿”å›æ˜¯ç»“æœï¼Œå¹¶ä¸ä¼šå’ŒADV_PAIRADV_INDEXå…³è” å®é™…æµ‹è¯•æ—¶å…³è”çš„  params= ADV_PAIRADV_INDEX*256 + çŠ¶æ€
+    //TODO !!!!!   ·ÀÖ¹SDKÔËĞĞÒì³£,ÒâÍâÅ×³ö²»Ê¹ÓÃÕâ¸ö¹ã²¥µÄ·¢ËÍ×´Ì¬»Øµ÷£¬
+    //µ«ÊÇÕâÃ´×öÊÇÓĞ·çÏÕµÄ£¬ÊÖ²áÀïËµµÄÊÇ´Ë´¦·µ»ØÊÇ½á¹û£¬²¢²»»áºÍADV_PAIRADV_INDEX¹ØÁª Êµ¼Ê²âÊÔÊ±¹ØÁªµÄ  params= ADV_PAIRADV_INDEX*256 + ×´Ì¬
     if(ADV_PAIRADV_INDEX != params/256)
     {
         return;
@@ -381,8 +383,8 @@ static void adv_manuadv_send_handle( uint32_t params)
         }
         else
         {
-            //ä»…åœ¨ä¸»åŠ¨å‘é€å®Œæˆåå°†å‘é€æŒ‡é’ˆç§»åŠ¨ï¼Œé˜²æ­¢SDKè¿è¡Œå¼‚å¸¸,æ„å¤–æŠ›å‡ºä¸ä½¿ç”¨è¿™ä¸ªå¹¿æ’­çš„å‘é€çŠ¶æ€å›è°ƒ
-            //è¿™ç§é˜²é”™æœºåˆ¶æ¯”ä¸Šé¢çš„è¦é è°±
+            //½öÔÚÖ÷¶¯·¢ËÍÍê³Éºó½«·¢ËÍÖ¸ÕëÒÆ¶¯£¬·ÀÖ¹SDKÔËĞĞÒì³£,ÒâÍâÅ×³ö²»Ê¹ÓÃÕâ¸ö¹ã²¥µÄ·¢ËÍ×´Ì¬»Øµ÷
+            //ÕâÖÖ·À´í»úÖÆ±ÈÉÏÃæµÄÒª¿¿Æ×
             if(WICED_TRUE == adv_send_enable)
             {
                 WICED_LOG_VERBOSE(" adv_fifo_out_optr = %d  adv_fifo_out_iptr = %d",adv_fifo_out_optr,adv_fifo_out_iptr);
@@ -396,12 +398,12 @@ static void adv_manuadv_send_handle( uint32_t params)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_recevier_handle
-// å‡½æ•°æè¿°: æ¥æ”¶å¹¿æ’­æ•°æ®å¤„ç†
-// å‡½æ•°è¾“å…¥:  *p_scan_resultï¼š
-//           *p_adv_dataï¼š æ¥æ”¶åˆ°æ•°æ®åŒ… 
-// å‡½æ•°è¿”å›å€¼:  WICED_FALSEï¼šæ•°æ®æœªè¢«å¤„ç†
-//             WICED_TRUEï¼š æ•°æ®å·²å¤„ç†
+// º¯ÊıÃû³Æ: adv_recevier_handle
+// º¯ÊıÃèÊö: ½ÓÊÕ¹ã²¥Êı¾İ´¦Àí
+// º¯ÊıÊäÈë:  *p_scan_result£º
+//           *p_adv_data£º ½ÓÊÕµ½Êı¾İ°ü 
+// º¯Êı·µ»ØÖµ:  WICED_FALSE£ºÊı¾İÎ´±»´¦Àí
+//             WICED_TRUE£º Êı¾İÒÑ´¦Àí
 //*****************************************************************************/
 static wiced_bool_t adv_recevier_handle (wiced_bt_ble_scan_results_t *p_scan_result, uint8_t *p_adv_data)
 {
@@ -411,16 +413,16 @@ static wiced_bool_t adv_recevier_handle (wiced_bt_ble_scan_results_t *p_scan_res
     uint16_t rece_cmd;
     uint16_t rece_crc;
 
-    //æ•°æ®å¤´ä¸åŒ¹é…ï¼Œä¸åšè§£æ
+    //Êı¾İÍ·²»Æ¥Åä£¬²»×ö½âÎö
     //WICED_LOG_VERBOSE("Rece ADV MANUFACTURER: \r\n");
     if(0 != memcmp(p_adv_data,adv_send_data_head,sizeof(adv_send_data_head)))
     {
         //WICED_LOG_VERBOSE("Rece isn't own packload: \r\n");
         return WICED_FALSE;
     }
-    for(uint16_t i=0; i<ADV_RECE_FIFO_LEN; i++)  //æ£€éªŒæ•°æ®æ˜¯å¦å·²å­˜å‚¨åœ¨ç¼“å†²ä¸­
+    for(uint16_t i=0; i<ADV_RECE_FIFO_LEN; i++)  //¼ìÑéÊı¾İÊÇ·ñÒÑ´æ´¢ÔÚ»º³åÖĞ
     {
-        //æ•°æ®æ¯”å¯¹æ—¶ ä»seqå­—èŠ‚å¼€å§‹æ¯”å¯¹
+        //Êı¾İ±È¶ÔÊ± ´Óseq×Ö½Ú¿ªÊ¼±È¶Ô
         if(0 == memcmp(p_adv_data+sizeof(adv_send_data_head)+1,adv_fifo_in[i].item.crc_check,ADV_PACK_LEN-sizeof(adv_send_data_head)-1))
         {
             //WICED_LOG_VERBOSE("Rece old packload: \r\n");
@@ -435,14 +437,14 @@ static wiced_bool_t adv_recevier_handle (wiced_bt_ble_scan_results_t *p_scan_res
     //decode
     AES_Decrypt(adv_data.item.remote_mac,adv_data.item.remote_mac, 16,aes128key);
 #endif
-    //æ ¡éªŒ
+    //Ğ£Ñé
     rece_crc = adv_data.item.crc_check[0];
     rece_crc = rece_crc*256 + adv_data.item.crc_check[1];
     if(rece_crc !=  CrcCalc(adv_data.adv_array+sizeof(adv_send_data_head)+3,sizeof(adv_data.adv_array)-(sizeof(adv_send_data_head)+3)))
     {
         return WICED_TRUE;
     }
-    //å»æ··æ·†
+    //È¥»ìÏı
     seed = adv_data.item.seq;
     for (int i = sizeof(adv_send_data_head)+4; i < sizeof(adv_data.adv_array); i++)
     {
@@ -466,7 +468,7 @@ static wiced_bool_t adv_recevier_handle (wiced_bt_ble_scan_results_t *p_scan_res
     }
     WICED_BT_TRACE("\r\n");
 
-    adv_data.item.ttl = 0;  //é¥æ§å™¨ä¸è½¬å‘æ•°æ®
+    adv_data.item.ttl = 0;  //Ò£¿ØÆ÷²»×ª·¢Êı¾İ
     if(adv_data.item.ttl > 0)
     {
         //relay
@@ -480,7 +482,7 @@ static wiced_bool_t adv_recevier_handle (wiced_bt_ble_scan_results_t *p_scan_res
 
 
     adv_fifo_in_iptr = adv_fifo_iptr_plus(adv_fifo_in_iptr,1);
-    //TODO ä¸´æ—¶å¤„ç†ï¼Œåç»­éœ€åŒºåˆ†æŒ‡ä»¤ç±»å‹ï¼ŒæŠ›ç»™åº”ç”¨é€»è¾‘å¤„ç†
+    //TODO ÁÙÊ±´¦Àí£¬ºóĞøĞèÇø·ÖÖ¸ÁîÀàĞÍ£¬Å×¸øÓ¦ÓÃÂß¼­´¦Àí
     rece_cmd = adv_data.item.remote_cmd[0];
     rece_cmd = rece_cmd*256 + adv_data.item.remote_cmd[1];
     for(uint8_t i=0; i<sizeof(adv_receive_models)/sizeof(adv_receive_model_t);i++)
@@ -498,10 +500,10 @@ static wiced_bool_t adv_recevier_handle (wiced_bt_ble_scan_results_t *p_scan_res
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_pack_init
-// å‡½æ•°æè¿°: è‡ªå®šä¹‰å¹¿æ’­çš„åˆå§‹åŒ–--ç”¨äºä¸ç¯çš„äº¤äº’å†…å®¹
-// å‡½æ•°è¾“å…¥:  
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: adv_pack_init
+// º¯ÊıÃèÊö: ×Ô¶¨Òå¹ã²¥µÄ³õÊ¼»¯--ÓÃÓÚÓëµÆµÄ½»»¥ÄÚÈİ
+// º¯ÊıÊäÈë:  
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void adv_pack_init(void)
 {
@@ -525,13 +527,13 @@ void adv_pack_init(void)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: adv_vendor_send_cmd
-// å‡½æ•°æè¿°: æ‰“åŒ…è‡ªå®šä¹‰å¹¿æ’­æ•°æ®å¹¶å­˜å‚¨åˆ°å‘é€åºåˆ—ä¸­
-// å‡½æ•°è¾“å…¥: user_cmd: å‘½ä»¤
-//          *pack_load: å‘½ä»¤å‚æ•°  
-//          len: å‘½ä»¤å‚æ•°çš„é•¿åº¦
-//          ttl: æ•°æ®åŒ…å¯è¢«è½¬å‘çš„æ¬¡æ•°
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: adv_vendor_send_cmd
+// º¯ÊıÃèÊö: ´ò°ü×Ô¶¨Òå¹ã²¥Êı¾İ²¢´æ´¢µ½·¢ËÍĞòÁĞÖĞ
+// º¯ÊıÊäÈë: user_cmd: ÃüÁî
+//          *pack_load: ÃüÁî²ÎÊı  
+//          len: ÃüÁî²ÎÊıµÄ³¤¶È
+//          ttl: Êı¾İ°ü¿É±»×ª·¢µÄ´ÎÊı
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void adv_vendor_send_cmd(uint16_t user_cmd,uint8_t *pack_load,uint8_t len,uint8_t ttl)
 {
@@ -558,7 +560,7 @@ void adv_vendor_send_cmd(uint16_t user_cmd,uint8_t *pack_load,uint8_t len,uint8_
     adv_fifo_out[adv_fifo_out_iptr].item.local_cmd[0] = (uint8_t)((user_cmd>>8)&0xFF);
     adv_fifo_out[adv_fifo_out_iptr].item.local_cmd[1] = (uint8_t)(user_cmd);
 
-    //TODO æš‚ä¸åšåˆ†åŒ…å¤„ç†
+    //TODO Ôİ²»×ö·Ö°ü´¦Àí
     if(len > sizeof(adv_fifo_out[adv_fifo_out_iptr].item.cmd_load))
         len = sizeof(adv_fifo_out[adv_fifo_out_iptr].item.cmd_load);
     memcpy(adv_fifo_out[adv_fifo_out_iptr].item.cmd_load,pack_load,len);
@@ -566,20 +568,20 @@ void adv_vendor_send_cmd(uint16_t user_cmd,uint8_t *pack_load,uint8_t len,uint8_
     mesh_generate_random(adv_fifo_out[adv_fifo_out_iptr].item.cmd_load+len,\
                          sizeof(adv_fifo_out[adv_fifo_out_iptr].item.cmd_load)-len);
 
-    //æ•°æ®æ··æ·†å¤„ç†
+    //Êı¾İ»ìÏı´¦Àí
     seed = adv_fifo_out[adv_fifo_out_iptr].item.seq;
     for (int i = sizeof(adv_send_data_head)+4; i < (sizeof(adv_fifo_out[adv_fifo_out_iptr].adv_array)-1); i++)
     {
         seed = 214013 * seed + 2531011;
         adv_fifo_out[adv_fifo_out_iptr].adv_array[i] ^= (seed >> 16) & 0xff;
     }
-    //æ ¡éªŒ
+    //Ğ£Ñé
     crc_send = CrcCalc(adv_fifo_out[adv_fifo_out_iptr].adv_array+(sizeof(adv_send_data_head)+3),
                        sizeof(adv_fifo_out[adv_fifo_out_iptr].adv_array)-(sizeof(adv_send_data_head)+4));
     adv_fifo_out[adv_fifo_out_iptr].item.crc_check[0] = (uint8_t)(crc_send>>8);
     adv_fifo_out[adv_fifo_out_iptr].item.crc_check[1] = (uint8_t)(crc_send);
 #if AES_ENABLE
-    //AESåŠ å¯†
+    //AES¼ÓÃÜ
     AES_Encrypt(adv_fifo_out[adv_fifo_out_iptr].item.local_mac,adv_fifo_out[adv_fifo_out_iptr].item.local_mac,16,aes128key);
 #endif
     adv_fifo_out[adv_fifo_out_iptr].item.count = ADV_CMD_RETRYTIMES;
@@ -588,27 +590,27 @@ void adv_vendor_send_cmd(uint16_t user_cmd,uint8_t *pack_load,uint8_t len,uint8_
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: advpackReWriteRemoteIndex
-// å‡½æ•°æè¿°: é‡å†™é¥æ§å™¨çš„Indexè®¡æ•°ï¼Œbit1 bit0æœ‰æ•ˆï¼Œå ç”¨ä¸€ä¸ªå­—èŠ‚
-//          æ­¤è®¡æ•°ç”¨äºè¯†åˆ«é¥æ§å™¨æ˜¯å¦è¢«é‡ç½®(æˆ–è§£é™¤ç»‘å®š)ï¼Œæ¯æ¬¡è§£é™¤ç»‘å®šè‡ªåŠ 1ï¼Œ
-//          å ç”¨é«˜ä½çš„
-// å‡½æ•°è¾“å…¥:  
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: advpackReWriteRemoteIndex
+// º¯ÊıÃèÊö: ÖØĞ´Ò£¿ØÆ÷µÄIndex¼ÆÊı£¬bit1 bit0ÓĞĞ§£¬Õ¼ÓÃÒ»¸ö×Ö½Ú
+//          ´Ë¼ÆÊıÓÃÓÚÊ¶±ğÒ£¿ØÆ÷ÊÇ·ñ±»ÖØÖÃ(»ò½â³ı°ó¶¨)£¬Ã¿´Î½â³ı°ó¶¨×Ô¼Ó1£¬
+//          Õ¼ÓÃ¸ßÎ»µÄ
+// º¯ÊıÊäÈë:  
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void advpackReWriteRemoteIndex(void)
 {
     remote_index++;
-    //TODO å°†æ­¤å€¼å†™å…¥åˆ°FLASHä¸­
+    //TODO ½«´ËÖµĞ´Èëµ½FLASHÖĞ
     flash_write_erase(FLASH_ADDR_CNT, (uint8_t*)(&remote_index), sizeof(remote_index),WICED_TRUE);
 
 }
 //*****************************************************************************
-// å‡½æ•°åç§°: advpackReadRemoteIndex
-// å‡½æ•°æè¿°: è¯»å–é¥æ§å™¨çš„Indexè®¡æ•°ï¼Œbit1 bit0æœ‰æ•ˆï¼Œå ç”¨ä¸€ä¸ªå­—èŠ‚
-//          æ­¤è®¡æ•°ç”¨äºè¯†åˆ«é¥æ§å™¨æ˜¯å¦è¢«é‡ç½®(æˆ–è§£é™¤ç»‘å®š)ï¼Œæ¯æ¬¡è§£é™¤ç»‘å®šè‡ªåŠ 1ï¼Œ
-//          å ç”¨é«˜ä½çš„
-// å‡½æ•°è¾“å…¥:  
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: advpackReadRemoteIndex
+// º¯ÊıÃèÊö: ¶ÁÈ¡Ò£¿ØÆ÷µÄIndex¼ÆÊı£¬bit1 bit0ÓĞĞ§£¬Õ¼ÓÃÒ»¸ö×Ö½Ú
+//          ´Ë¼ÆÊıÓÃÓÚÊ¶±ğÒ£¿ØÆ÷ÊÇ·ñ±»ÖØÖÃ(»ò½â³ı°ó¶¨)£¬Ã¿´Î½â³ı°ó¶¨×Ô¼Ó1£¬
+//          Õ¼ÓÃ¸ßÎ»µÄ
+// º¯ÊıÊäÈë:  
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void advpackReadRemoteIndex(void)
 {
@@ -619,17 +621,17 @@ void advpackReadRemoteIndex(void)
 }
 
 //*****************************************************************************
-// å‡½æ•°åç§°: advpackResetRemoteIndex
-// å‡½æ•°æè¿°: é‡ç½®é¥æ§å™¨çš„Indexè®¡æ•°ï¼Œbit1 bit0æœ‰æ•ˆï¼Œå ç”¨ä¸€ä¸ªå­—èŠ‚
-//          æ­¤è®¡æ•°ç”¨äºè¯†åˆ«é¥æ§å™¨æ˜¯å¦è¢«é‡ç½®(æˆ–è§£é™¤ç»‘å®š)ï¼Œæ¯æ¬¡è§£é™¤ç»‘å®šè‡ªåŠ 1ï¼Œ
-//          å ç”¨é«˜ä½çš„
-// å‡½æ•°è¾“å…¥:  
-// å‡½æ•°è¿”å›å€¼: 
+// º¯ÊıÃû³Æ: advpackResetRemoteIndex
+// º¯ÊıÃèÊö: ÖØÖÃÒ£¿ØÆ÷µÄIndex¼ÆÊı£¬bit1 bit0ÓĞĞ§£¬Õ¼ÓÃÒ»¸ö×Ö½Ú
+//          ´Ë¼ÆÊıÓÃÓÚÊ¶±ğÒ£¿ØÆ÷ÊÇ·ñ±»ÖØÖÃ(»ò½â³ı°ó¶¨)£¬Ã¿´Î½â³ı°ó¶¨×Ô¼Ó1£¬
+//          Õ¼ÓÃ¸ßÎ»µÄ
+// º¯ÊıÊäÈë:  
+// º¯Êı·µ»ØÖµ: 
 //*****************************************************************************/
 void advpackResetRemoteIndex(void)
 {
     remote_index == 0;
-    //TODO å°†æ­¤å€¼å†™å…¥åˆ°FLASHä¸­
+    //TODO ½«´ËÖµĞ´Èëµ½FLASHÖĞ
     flash_write_erase(FLASH_ADDR_CNT, (uint8_t*)(&remote_index), sizeof(remote_index),WICED_TRUE);
 }
 

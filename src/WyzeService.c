@@ -177,7 +177,11 @@ uint8_t* WyzeServiceSetEncryptKey(uint8_t *indata, uint8_t inlen, uint8_t *outle
 //*****************************************************************************/
 void WyzeServiceSetClientConfiguration(uint16_t client_config)
 {
+    extern void appUpdataCommpara(void);
     wyzeServiceConfigDescriptor = client_config;
+    if(wyzeServiceConfigDescriptor){
+        appUpdataCommpara();
+    }
     LOG_DEBUG("wyze_service_config_descriptor changed: %d\n", wyzeServiceConfigDescriptor);
 }
 

@@ -771,10 +771,13 @@ wiced_bool_t AndonGattSendNotification (uint16_t conn_id, uint16_t val_len, uint
 //*****************************************************************************/
 void AndonServiceSetClientConfiguration(uint16_t client_config)
 {
+    extern void appUpdataCommpara(void);
     andonServiceConfigDescriptor = client_config;
     if(client_config == 0)
     {
         memset(encryptkey,0,sizeof(encryptkey));
+    }else{
+        appUpdataCommpara();
     }
     LOG_DEBUG("customer_service_config_descriptor changed: %d\n", andonServiceConfigDescriptor);
 }

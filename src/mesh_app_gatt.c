@@ -76,7 +76,7 @@ extern wiced_bt_cfg_settings_t wiced_bt_cfg_settings;
 extern wiced_bt_gatt_status_t remote_provision_gatt_client_event(wiced_bt_gatt_evt_t event, wiced_bt_gatt_event_data_t* p_data);
 extern wiced_bt_gatt_status_t mesh_gatt_client_event(wiced_bt_gatt_evt_t event, wiced_bt_gatt_event_data_t* p_data);
 extern void                   mesh_start_stop_scan_callback(wiced_bool_t start, wiced_bool_t is_active);
-extern void                   appBleConnectNotify(wiced_bool_t isconneted);
+extern void                   appBleConnectNotify(wiced_bool_t isconneted,wiced_bt_device_address_t);
 
 /******************************************************
  *          Variables Definitions
@@ -879,15 +879,16 @@ wiced_bt_gatt_status_t mesh_gatts_callback(wiced_bt_gatt_evt_t event, wiced_bt_g
                 // Otherwise don't change MTU
                 if(conn_mtu == 0)
                     conn_mtu = 23;
-                appBleConnectNotify(WICED_TRUE);    
-                wiced_bt_l2cap_update_ble_conn_params(p_data->connection_status.bd_addr, 30, 48, 0, 200);
+                // wiced_bt_set_tx_power(p_data->connection_status.bd_addr,8); 
+                appBleConnectNotify(WICED_TRUE, p_data->connection_status.bd_addr);    
+                // wiced_bt_l2cap_update_ble_conn_params(p_data->connection_status.bd_addr, 36, 48, 0, 200);
                 // We will call mesh_core's wiced_bt_mesh_core_connection_status() on notification enable (write 0x0001 to HANDLE_DESCR_MESH_PROXY_DATA_CLIENT_CONFIG)
             }
             else
             {
                 conn_id = 0;
                 conn_mtu = 0;
-				appBleConnectNotify(WICED_FALSE);  
+				appBleConnectNotify(WICED_FALSE, p_data->connection_status.bd_addr);  
                 
                 // On disconnect ref_data is disconnection reason.
                 wiced_bt_mesh_core_connection_status(0, WICED_FALSE, p_data->connection_status.reason, 20);

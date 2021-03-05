@@ -23,9 +23,9 @@
 #define MESH_CID                0x0804
 #define MESH_PID                (0x4130)  //"A0"的ACSII
 
-#define ANDON_HW_MAJOR          0         //0--9
+#define ANDON_HW_MAJOR          1         //0--9
 #define ANDON_HW_MINOR          0         //0--9
-#define ANDON_HW_PATCH          1        //0--127
+#define ANDON_HW_PATCH          0        //0--127
 #define MESH_VID                ((ANDON_HW_MAJOR<<12)&0xF000 | (ANDON_HW_MINOR<<8)&0x0F00 | ANDON_HW_PATCH&0xFF)
 // #define MESH_VID      (0x0101)
 

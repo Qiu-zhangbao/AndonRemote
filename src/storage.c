@@ -77,7 +77,7 @@ uint16_t storage_read_sn(uint8_t *data)
 static uint8_t ACC_SN1[] = "JA_SLA0_20031100002020031100000000";
 #else
 #if RELEASE
-static uint8_t ACC_SN1[] = "JA_SLA0_7C78B20C0A15,3516967f16f2caf20c7de5772bf214a7";
+static uint8_t ACC_SN1[] = "JA_SLA0_7C78B20C0A1A,0fdb5437db1538139697efd2c563c60b";
 #else
 static uint8_t ACC_SN1[] = "JA_SLA0_7C78B20C0801,3d9417573eb286786460625c2cab539f";
 // static uint8_t ACC_SN1[] = "JA_SLA0_7C78B20C0A18,2cb09042452537abf36cc9b7c4fe2143";
