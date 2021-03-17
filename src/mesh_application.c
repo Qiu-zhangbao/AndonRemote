@@ -245,7 +245,7 @@ uint16_t mesh_nvm_idx_seq;
 
 
 #ifdef NODE_UUID_HAS_MAGIC_NUM
-uint8_t node_uuid_magic_bytes[4] = {0xFF, 0xFF, 0xFF, 0xFF};
+uint8_t node_uuid_magic_bytes[4] = {0xFF, 0xFF, 0xFF, 0xFF}; 
 #endif
 
 
@@ -514,10 +514,11 @@ void mesh_application_gen_uuid(uint8_t *uuid)
     uuid[8] = (uuid[8] & 0x3f) | 0x80;
 #else
     rand128(uuid);
-    uuid[6] = node_uuid_magic_bytes[0];
-    uuid[7] = node_uuid_magic_bytes[1];
-    uuid[8] = node_uuid_magic_bytes[2];
-    uuid[9] = node_uuid_magic_bytes[3];
+    
+    uuid[6] = (MESH_PID>>8)&0xFF;
+    uuid[7] = MESH_PID&0xFF;
+    uuid[8] = (MESH_PID>>8)&0xFF;
+    uuid[9] = MESH_PID&0xFF;
 #endif
 
 #ifdef EMBEDDED_PROV_UUID_MAGIC_NUBMER
