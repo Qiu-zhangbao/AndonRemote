@@ -207,14 +207,14 @@ void AndonPair_Cmdhandle(wiced_bt_device_address_t remote_mac, uint16_t cmd, voi
     }
 
     if(ADV_PARILOAD_PAIREDACK == p_adv_data->pair_stata){
-        // //绑定完成
-        // if(0 == memcmp(paried_addr,remote_mac,sizeof(wiced_bt_device_address_t)))
-        // {
-        //     if(NULL != AndonPair_handle.AndonPair_Done_cback)
-        //     {
-        //         AndonPair_handle.AndonPair_Done_cback(ANDONPAIR_PAIR_SUCCESS);
-        //     }
-        // }
+        //绑定完成
+        if(0 == memcmp(paried_addr,remote_mac,sizeof(wiced_bt_device_address_t)))
+        {
+            if(NULL != AndonPair_handle.AndonPair_Done_cback)
+            {
+                AndonPair_handle.AndonPair_Done_cback(ANDONPAIR_PAIR_SUCCESS);
+            }
+        }
     }
 
     if(ADV_PARILOAD_PAIRACK != p_adv_data->pair_stata){
@@ -311,10 +311,10 @@ void AndonPair_Paired(void)
         WICED_LOG_DEBUG("confirm mac %B \r\n",paried_addr);
         memset(AndonPair_Cache.pair_device_cache[AndonPair_Cache.current_pair_cacheIndex],0,sizeof(wiced_bt_device_address_t));
     
-        if(NULL != AndonPair_handle.AndonPair_Done_cback)
-        {
-            AndonPair_handle.AndonPair_Done_cback(ANDONPAIR_PAIR_SUCCESS);
-        }
+        // if(NULL != AndonPair_handle.AndonPair_Done_cback)
+        // {
+        //     AndonPair_handle.AndonPair_Done_cback(ANDONPAIR_PAIR_SUCCESS);
+        // }
 
     }
     else
