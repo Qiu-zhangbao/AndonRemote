@@ -1,18 +1,18 @@
 //******************************************************************************
 //*
-//* ÎÄ ¼ş Ãû : 
-//* ÎÄ¼şÃèÊö : 
-//* ×÷    Õß : zhw/Andon Health CO.LTD
-//* °æ    ±¾ : V0.0
-//* ÈÕ    ÆÚ : 
-//* º¯ÊıÁĞ±í : ¼û.c
-//* ¸üĞÂÀúÊ· : ¼û.c           
+//* æ–‡ ä»¶ å : 
+//* æ–‡ä»¶æè¿° : 
+//* ä½œ    è€… : zhw/Andon Health CO.LTD
+//* ç‰ˆ    æœ¬ : V0.0
+//* æ—¥    æœŸ : 
+//* å‡½æ•°åˆ—è¡¨ : è§.c
+//* æ›´æ–°å†å² : è§.c           
 //******************************************************************************
 #ifndef _ANDON_APP_H_
 #define _ANDON_APP_H_
 
 ///*****************************************************************************
-///*                         °üº¬ÎÄ¼şËµÃ÷
+///*                         åŒ…å«æ–‡ä»¶è¯´æ˜
 ///*****************************************************************************
 #include "wiced_hal_gpio.h"
 #include "wiced_timer.h"
@@ -23,7 +23,7 @@
 #endif
 
 ///*****************************************************************************
-///*                         ºê¶¨ÒåÇø
+///*                         å®å®šä¹‰åŒº
 ///*****************************************************************************
 
 #if CYW20735B1
@@ -52,28 +52,28 @@ extern wiced_platform_led_config_t platform_led[];
 
 #define ANDON_APP_PERIODIC_TIME_LENGTH              20               //ms
 
-#define ANDON_APP_RUN_NORMAL                        0                //Õı³£¹¤×÷Ä£Ê½
-#define ANDON_APP_RUN_WAIT_PROVISION                1                //µÈ´ıÅäÍø
-#define ANDON_APP_RUN_APP_PROVISION                 2                //AppÈëÍø
-#define ANDON_APP_RUN_BAKGROUD_PROVISION            3                //ºóÌ¨ÅäÍø
-#define ANDON_APP_RUN_TEST                          0xFF             //²âÊÔÄ£Ê½
+#define ANDON_APP_RUN_NORMAL                        0                //æ­£å¸¸å·¥ä½œæ¨¡å¼
+#define ANDON_APP_RUN_WAIT_PROVISION                1                //ç­‰å¾…é…ç½‘
+#define ANDON_APP_RUN_APP_PROVISION                 2                //Appå…¥ç½‘
+#define ANDON_APP_RUN_BAKGROUD_PROVISION            3                //åå°é…ç½‘
+#define ANDON_APP_RUN_TEST                          0xFF             //æµ‹è¯•æ¨¡å¼
 
 
 
 ///*****************************************************************************
-///*                         Strcut½á¹¹±äÁ¿¶¨ÒåÇø
+///*                         Strcutç»“æ„å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 typedef struct
 {
-    wiced_timer_t            periodic_timer;      //°´¼üÉ¨Ãè¶¨Ê±Æ÷
-    wiced_bool_t             runing;              //ÊÇ·ñ´¦ÓÚÔËĞĞÖĞ£¬ÎªTRUEÊ±²»ÔÊĞí½øĞĞµÍ¹¦ºÄ×´Ì¬
-    wiced_bool_t             is_provison;         //ÊÇ·ñÈëÍø
-    uint32_t                 run_mode;            //µ±Ç°ÔËĞĞ×´Ì¬
-    uint32_t                 display_mode;        //ÏÔÊ¾×´Ì¬
+    wiced_timer_t            periodic_timer;      //æŒ‰é”®æ‰«æå®šæ—¶å™¨
+    wiced_bool_t             runing;              //æ˜¯å¦å¤„äºè¿è¡Œä¸­ï¼Œä¸ºTRUEæ—¶ä¸å…è®¸è¿›è¡Œä½åŠŸè€—çŠ¶æ€
+    wiced_bool_t             is_provison;         //æ˜¯å¦å…¥ç½‘
+    uint32_t                 run_mode;            //å½“å‰è¿è¡ŒçŠ¶æ€
+    uint32_t                 display_mode;        //æ˜¾ç¤ºçŠ¶æ€
 }andon_app_handler_t;
 
 ///*****************************************************************************
-///*                         º¯ÊıÉùÃ÷Çø
+///*                         å‡½æ•°å£°æ˜åŒº
 ///*****************************************************************************
 void Andon_App_Init(wiced_bool_t);
 wiced_bool_t appAndonBleConnectUsed(void);
@@ -82,7 +82,7 @@ void appSetConnAdvEnable(void);
 void appSetConnAdvDisable(void);
 void AppGetMyMac(wiced_bt_device_address_t p_data);
 ///*****************************************************************************
-///*                         Íâ²¿È«¾Ö±äÁ¿¶¨ÒåÇø
+///*                         å¤–éƒ¨å…¨å±€å˜é‡å®šä¹‰åŒº
 ///*****************************************************************************
 extern andon_app_handler_t andon_app_state;
 

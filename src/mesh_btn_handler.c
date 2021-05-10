@@ -96,9 +96,9 @@ extern void andon_app_encoder_action(void);
  ******************************************************/
 typedef struct
 {
-    uint16_t                 btn_onoff_level;              //Ó²¼şÉ¨ÃèµÄONOFF°´¼ü×´Ì¬
-    uint16_t                 btn_encode1_level;            //Ó²¼şÉ¨ÃèµÄ±àÂëÆ÷¶Ë¿Ú1µÄ×´Ì¬
-    uint16_t                 btn_encode2_level;            //Ó²¼şÉ¨ÃèµÄ±àÂëÆ÷¶Ë¿Ú2µÄ×´Ì¬
+    uint16_t                 btn_onoff_level;              //ç¡¬ä»¶æ‰«æçš„ONOFFæŒ‰é”®çŠ¶æ€
+    uint16_t                 btn_encode1_level;            //ç¡¬ä»¶æ‰«æçš„ç¼–ç å™¨ç«¯å£1çš„çŠ¶æ€
+    uint16_t                 btn_encode2_level;            //ç¡¬ä»¶æ‰«æçš„ç¼–ç å™¨ç«¯å£2çš„çŠ¶æ€
 } handle_hscankey_t;
 
 /******************************************************
@@ -111,8 +111,8 @@ static uint16_t fristToggle = 0;
 static uint32_t toggleTimeKeep = 0;
 static int16_t delta_plus_stata = 0;
 static handle_hscankey_t handle_hscankeyvalue = {0};
-static uint16_t onoff_stata = 0;                           // ON/OFF °´¼üµÄ×´Ì¬
-static wiced_bool_t scankeystata = WICED_FALSE;            // scankey ÊÇ·ñÕıÔÚÔËĞĞ
+static uint16_t onoff_stata = 0;                           // ON/OFF æŒ‰é”®çš„çŠ¶æ€
+static wiced_bool_t scankeystata = WICED_FALSE;            // scankey æ˜¯å¦æ­£åœ¨è¿è¡Œ
 /******************************************************
  *               Function Definitions
  ******************************************************/
@@ -140,10 +140,10 @@ void lowpower_stuckKey_callbackApp(void)
 }
     
 //*****************************************************************************
-// º¯ÊıÃû³Æ: mesh_btn_init
-// º¯ÊıÃèÊö: °´¼ü³õÊ¼»¯
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: mesh_btn_init
+// å‡½æ•°æè¿°: æŒ‰é”®åˆå§‹åŒ–
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void mesh_btn_init(void)
 {
@@ -172,7 +172,7 @@ void mesh_btn_init(void)
     
     btn_state.btn_pairpin_level = 1;
     btn_state.btn_pairpin_level += wiced_hal_gpio_get_pin_input_status((uint32_t)*platform_button[BTN_5].gpio);
-    //»½ĞÑÊ±¼ì²âµ½°´¼ü
+    //å”¤é†’æ—¶æ£€æµ‹åˆ°æŒ‰é”®
     if( BTN_RELEASE_MASK != (btn_state.btn_state_level&BTN_RELEASE_MASK))
     {
         WICED_LOG_DEBUG("btn is pressed during wakeup :%x\r\n",btn_state.btn_state_level);
@@ -199,10 +199,10 @@ void mesh_btn_init(void)
 }
 
 //*****************************************************************************
-// º¯ÊıÃû³Æ: btnKeyScanStart
-// º¯ÊıÃèÊö: ÔÚkeyScanĞèÒª±£³Ö¿ªÆôÊ±£¬Ñ­»·µ÷ÓÃ£¬ÒÔ·ÀÖ¹keyscan³¬Ê±Í£Ö¹¼ì²â
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: btnKeyScanStart
+// å‡½æ•°æè¿°: åœ¨keyScanéœ€è¦ä¿æŒå¼€å¯æ—¶ï¼Œå¾ªç¯è°ƒç”¨ï¼Œä»¥é˜²æ­¢keyscanè¶…æ—¶åœæ­¢æ£€æµ‹
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void btnKeyScanStart(void)
 {
@@ -214,10 +214,10 @@ void btnKeyScanStart(void)
     }
 }
 //*****************************************************************************
-// º¯ÊıÃû³Æ: wiced_btn_scan
-// º¯ÊıÃèÊö: °´¼üÉ¨Ãè
-// º¯ÊıÊäÈë:  
-// º¯Êı·µ»ØÖµ: 
+// å‡½æ•°åç§°: wiced_btn_scan
+// å‡½æ•°æè¿°: æŒ‰é”®æ‰«æ
+// å‡½æ•°è¾“å…¥:  
+// å‡½æ•°è¿”å›å€¼: 
 //*****************************************************************************/
 void wiced_btn_scan(void)
 {
@@ -256,7 +256,7 @@ void wiced_btn_scan(void)
     }
     
 
-    //ËùÓĞ°´¼ü¶¼ÊÍ·Å
+    //æ‰€æœ‰æŒ‰é”®éƒ½é‡Šæ”¾
     if(BTN_RELEASE_MASK == btn_state.btn_state_level)
     {
         if(++btn_state.btn_idle_count > BTN_RELEASE_MAX_CNT)
@@ -572,7 +572,7 @@ void handler_keyscan(uint16_t keycode,uint16_t status)
 //     }
 //     if(rsttimer_tick == 40)
 //     {
-//         //Ê¹ÓÃÁ¬ĞøÁ½´Î³õÊ¼»¯Í¬Ò»¸ö¶¨Ê±Æ÷½øĞĞ¸´Î»£¬ÕâÑùÆô¶¯ËÙ¶È±ÈÊ¹ÓÃÏµÍ³¸´Î»º¯ÊıÆô¶¯½Ï¿ì
+//         //ä½¿ç”¨è¿ç»­ä¸¤æ¬¡åˆå§‹åŒ–åŒä¸€ä¸ªå®šæ—¶å™¨è¿›è¡Œå¤ä½ï¼Œè¿™æ ·å¯åŠ¨é€Ÿåº¦æ¯”ä½¿ç”¨ç³»ç»Ÿå¤ä½å‡½æ•°å¯åŠ¨è¾ƒå¿«
 //         wiced_init_timer(&btnresettimer, &mesh_btn_reset_timer_callback, 0, WICED_MILLI_SECONDS_PERIODIC_TIMER);
 //     }
 //     else if(rsttimer_tick > 50)
@@ -601,17 +601,17 @@ static void mesh_app_handle_interrupt(void* user_data, uint8_t pin, uint32_t val
     //     wiced_init_timer(&btnresettimer, &mesh_btn_reset_timer_callback, 0, WICED_MILLI_SECONDS_PERIODIC_TIMER);
     // } 
     WICED_LOG_DEBUG("btn isr Pin : %d \n",pin);
-    // if(pin == *platform_button[BTN_5].gpio)               //Ä£Ê½Ñ¡Ôñ¶ÔÓ¦µÄ°´¼ü
+    // if(pin == *platform_button[BTN_5].gpio)               //æ¨¡å¼é€‰æ‹©å¯¹åº”çš„æŒ‰é”®
     // {
-    //     // wiced_hal_wdog_reset_system();  //Ê¹ÓÃÁ¬ĞøÁ½´Î³õÊ¼»¯Í¬Ò»¸ö¶¨Ê±Æ÷½øĞĞ¸´Î»£¬ÕâÑùÆô¶¯ËÙ¶È±ÈÊ¹ÓÃÏµÍ³¸´Î»º¯ÊıÆô¶¯½Ï¿ì
+    //     // wiced_hal_wdog_reset_system();  //ä½¿ç”¨è¿ç»­ä¸¤æ¬¡åˆå§‹åŒ–åŒä¸€ä¸ªå®šæ—¶å™¨è¿›è¡Œå¤ä½ï¼Œè¿™æ ·å¯åŠ¨é€Ÿåº¦æ¯”ä½¿ç”¨ç³»ç»Ÿå¤ä½å‡½æ•°å¯åŠ¨è¾ƒå¿«
     //     wiced_start_timer(&btnresettimer,10);
     //     rsttimer_tick = 0;
     //     //wiced_init_timer(&btnresettimer, &mesh_btn_reset_timer_callback, 0, WICED_MILLI_SECONDS_PERIODIC_TIMER);
     //     return;
     // }
 #if ENCODER
-#ifndef ENCODE_EDGE_TWO   //½öÒ»¸öGPIOÖĞ¶Ï·½Ê½
-    if(pin == *platform_button[BTN_2].gpio)         //±àÂëÆ÷¶ÔÓ¦µÄ¶Ë¿Ú£¬½öÊ¶±ğÒ»¸ö¶Ë¿Ú¼´¿É
+#ifndef ENCODE_EDGE_TWO   //ä»…ä¸€ä¸ªGPIOä¸­æ–­æ–¹å¼
+    if(pin == *platform_button[BTN_2].gpio)         //ç¼–ç å™¨å¯¹åº”çš„ç«¯å£ï¼Œä»…è¯†åˆ«ä¸€ä¸ªç«¯å£å³å¯
     {
         btn_state.btn_idle_count = 0;
         tick = wiced_hal_gpio_get_pin_input_status((uint32_t)*platform_button[BTN_2].gpio);
@@ -648,8 +648,8 @@ static void mesh_app_handle_interrupt(void* user_data, uint8_t pin, uint32_t val
             btn_state.btn_idle_count = 0;
         }
     }
-#else  //Á½¸ö¶Ë¿Ú·½Ê½
-    if(pin == *platform_button[BTN_2].gpio)         //Ê¶±ğÆäÖĞÒ»¸ö¶Ë¿Ú
+#else  //ä¸¤ä¸ªç«¯å£æ–¹å¼
+    if(pin == *platform_button[BTN_2].gpio)         //è¯†åˆ«å…¶ä¸­ä¸€ä¸ªç«¯å£
     {
         uint16_t tick1;
         btn_state.btn_idle_count = 0;
@@ -657,7 +657,7 @@ static void mesh_app_handle_interrupt(void* user_data, uint8_t pin, uint32_t val
         tick = wiced_hal_gpio_get_pin_input_status((uint32_t)*platform_button[BTN_2].gpio);
 
 
-        if(0 == delta_plus_stata)   //ÕıÔÚµÚÒ»¸ö¶Ë¿ÚµÄÂö³å
+        if(0 == delta_plus_stata)   //æ­£åœ¨ç¬¬ä¸€ä¸ªç«¯å£çš„è„‰å†²
         {
             if(tick1 == tick) 
             {
@@ -692,7 +692,7 @@ static void mesh_app_handle_interrupt(void* user_data, uint8_t pin, uint32_t val
         tick = wiced_hal_gpio_get_pin_input_status((uint32_t)*platform_button[BTN_2].gpio);
         tick1 = wiced_hal_gpio_get_pin_input_status((uint32_t)*platform_button[BTN_3].gpio);
 
-        if(0 == delta_plus_stata)   //ÕıÔÚµÚÒ»¸ö¶Ë¿ÚµÄÂö³å
+        if(0 == delta_plus_stata)   //æ­£åœ¨ç¬¬ä¸€ä¸ªç«¯å£çš„è„‰å†²
         {
             if(tick1 == tick) 
             {

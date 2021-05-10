@@ -325,7 +325,7 @@ void mesh_application_start()
     uint8_t value = 0;
    
     // wiced_hal_gpio_configure_pin(*platform_led[WICED_PLATFORM_LED_2].gpio, GPIO_OUTPUT_ENABLE, GPIO_PIN_OUTPUT_LOW);
-    //todo Ê¶±ð¹¤×°°´¼ü£¬½øÈëSMT¼ì²â
+    //todo è¯†åˆ«å·¥è£…æŒ‰é”®ï¼Œè¿›å…¥SMTæ£€æµ‹
     value += wiced_hal_gpio_get_pin_input_status((uint32_t)*platform_button[WICED_PLATFORM_BUTTON_6].gpio);
     if (value == 0)
     {
